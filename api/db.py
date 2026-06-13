@@ -97,6 +97,7 @@ class RedeemCodeStore:
 
     def _write_json(self, data: list[dict[str, Any]]) -> None:
         tmp = DATA_FILE.with_suffix(".json.tmp")
+        tmp.parent.mkdir(parents=True, exist_ok=True)
         tmp.write_text(
             json.dumps(data, indent=2, ensure_ascii=False),
             encoding="utf-8",
