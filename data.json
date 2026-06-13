@@ -1,0 +1,1298 @@
+[
+  {
+    "id": 1,
+    "code": "TESTCODE",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "manual"
+  },
+  {
+    "id": 2,
+    "code": "NTEWINFONSNTEWINFONS",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 3,
+    "code": "TOMATO100TOMATO100",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 4,
+    "code": "NTEFREENTEFREE",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 5,
+    "code": "LACRIMOSA0603LACRIMOSA0603",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 6,
+    "code": "NTEGIFTNTEGIFT",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 7,
+    "code": "DREAMWALK0603DREAMWALK0603",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 8,
+    "code": "NTEHAVEFUNNTEHAVEFUN",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 9,
+    "code": "NTEFUNGAMENTEFUNGAME",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 10,
+    "code": "NTENENENTENENE",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 11,
+    "code": "RACENOLIMITRACENOLIMIT",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 12,
+    "code": "BURNINGSUN",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 13,
+    "code": "RABBITHOLE",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 14,
+    "code": "SETSAIL",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 15,
+    "code": "NOMATTERTHECOST",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 16,
+    "code": "FIGHTFORHOPE",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 17,
+    "code": "OFFWEGO",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 18,
+    "code": "LEVIATHAN",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 19,
+    "code": "WARMSUNLIGHT",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 20,
+    "code": "ALLEYESONUS",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 21,
+    "code": "FLAMESOFHEART",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 22,
+    "code": "FACEALEPH1",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 23,
+    "code": "TOPICS",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 24,
+    "code": "IMPERATOR",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 25,
+    "code": "PTTMYZSOM",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 26,
+    "code": "FORYOU",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 27,
+    "code": "FIND",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 28,
+    "code": "RUNEREADER",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 29,
+    "code": "CRUMBLEDCITY",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 30,
+    "code": "DARKSIDE",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 31,
+    "code": "STARCHASER",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 32,
+    "code": "MAGAZINE",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 33,
+    "code": "ENDLESSSUMMER",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 34,
+    "code": "JOINCARNEVALE",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 35,
+    "code": "DREAMSPERSIST",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 36,
+    "code": "BAHAMUTKXMHM",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 37,
+    "code": "BACKTOSCHOOL",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 38,
+    "code": "THISISFINALE",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 39,
+    "code": "PAPERPLANE",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 40,
+    "code": "SHADOWOFGLORY",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 41,
+    "code": "ILLUSIONHAUNTS",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 42,
+    "code": "EVERSHINE",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 43,
+    "code": "QUICK",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 44,
+    "code": "PSM3",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 45,
+    "code": "MOONLIGHT",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 46,
+    "code": "WHOAMI",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 47,
+    "code": "AGONISON",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 48,
+    "code": "RISKEVERYTHING",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 49,
+    "code": "WUTHERINGGIFT",
+    "game": "wuwa",
+    "status": "OK",
+    "rewards": "2 Premium Resonance Potion, 2 Medium Revival Inhaler, 2 Medium Energy Bag, 10000 Shell Credit, 50 Astrite",
+    "source": "scraper"
+  },
+  {
+    "id": 50,
+    "code": "SHOREKEEPER",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 51,
+    "code": "WUWA4PC",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 52,
+    "code": "BLACKSHORES",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 53,
+    "code": "ABOUT",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 54,
+    "code": "ARTICLES",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 55,
+    "code": "FACETHEFATE",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 56,
+    "code": "DCARD3VN7M",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 57,
+    "code": "COMMUNITY",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 58,
+    "code": "ACCOUNT",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 59,
+    "code": "JOIN",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 60,
+    "code": "STARRYSTAGE",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 61,
+    "code": "VAULTOPS",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 62,
+    "code": "HITTHEROAD",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 63,
+    "code": "TREASUREHUNT",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 64,
+    "code": "SLICEDSPACE",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 65,
+    "code": "GETREADY",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 66,
+    "code": "2NDANNIVERSARY",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 67,
+    "code": "LATEST",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 68,
+    "code": "CATEGORIES",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 69,
+    "code": "ACCESS",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 70,
+    "code": "WUTHERING2024",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 71,
+    "code": "WUTHERINGWAVESGIFT",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 72,
+    "code": "JOURNEYWELL",
+    "game": "wuwa",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 73,
+    "code": "PTCGP",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 74,
+    "code": "LACRIMOSA0603",
+    "game": "nte",
+    "status": "OK",
+    "rewards": "30 Annulith, 20,000 Fons",
+    "source": "scraper"
+  },
+  {
+    "id": 75,
+    "code": "B100",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 76,
+    "code": "NTEFUNGAME",
+    "game": "nte",
+    "status": "OK",
+    "rewards": "10,000 Fons",
+    "source": "scraper"
+  },
+  {
+    "id": 77,
+    "code": "NTENOWTOENJOY",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 78,
+    "code": "504980102FKGOVNS",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 79,
+    "code": "RACENOLIMIT",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 80,
+    "code": "INFERNO",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 81,
+    "code": "DREAMWALK0603",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 82,
+    "code": "NTE0429",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 83,
+    "code": "FIND",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 84,
+    "code": "NTEHAVEFUN",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 85,
+    "code": "NTEWINFONS",
+    "game": "nte",
+    "status": "OK",
+    "rewards": "10,000 Fons",
+    "source": "scraper"
+  },
+  {
+    "id": 86,
+    "code": "MAGAZINE",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 87,
+    "code": "BDSP",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 88,
+    "code": "INTERVIEW",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 89,
+    "code": "C2000",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 90,
+    "code": "NTENENE",
+    "game": "nte",
+    "status": "OK",
+    "rewards": "10,000 Clicky Fries, 10 DynamiK",
+    "source": "scraper"
+  },
+  {
+    "id": 91,
+    "code": "TOMATO100",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 92,
+    "code": "QUICK",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 93,
+    "code": "ST79",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 94,
+    "code": "PSM3",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 95,
+    "code": "ABOUT",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 96,
+    "code": "ARTICLES",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 97,
+    "code": "ACCOUNT",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 98,
+    "code": "COMMUNITY",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 99,
+    "code": "JOIN",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 100,
+    "code": "MANISH",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 101,
+    "code": "NTEGIFT",
+    "game": "nte",
+    "status": "OK",
+    "rewards": "50 Annulith, 5 Rising Hunter Guides, 5 Light Dye",
+    "source": "scraper"
+  },
+  {
+    "id": 102,
+    "code": "NTEFREE",
+    "game": "nte",
+    "status": "OK",
+    "rewards": "30,000 Fons",
+    "source": "scraper"
+  },
+  {
+    "id": 103,
+    "code": "M1000",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 104,
+    "code": "LATEST",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 105,
+    "code": "CATEGORIES",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 106,
+    "code": "ACCESS",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 107,
+    "code": "NTENANALLYGO",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 108,
+    "code": "RABBITHOLE",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 109,
+    "code": "MAGICALVIGILANTE",
+    "game": "bluearchive",
+    "status": "OK",
+    "rewards": "5 Gift Choice Box, 10 Superior Enhancement Stone, 5 Advanced Enhancement Stone",
+    "source": "scraper"
+  },
+  {
+    "id": 110,
+    "code": "BOLTCATCH831",
+    "game": "bluearchive",
+    "status": "OK",
+    "rewards": "30 T9 Equipment Blueprint Choice Box, 30 T8 Equipment Blueprint Choice Box, 30 T7 Equipment Blueprint Choice Box",
+    "source": "scraper"
+  },
+  {
+    "id": 111,
+    "code": "THESKYOFUNITY0526",
+    "game": "bluearchive",
+    "status": "OK",
+    "rewards": "25 Beginner Tech Notes Choice Box, 20 Normal Tech Notes Choice Box, 15 Advanced Tech Notes Choice Box, 20 Beginner Tactical Training Blu-ray Choice Box, 15 Normal Tactical Training Blu-ray Choice Box, 10 Advanced Tactical Training Blu-ray Choice Box",
+    "source": "scraper"
+  },
+  {
+    "id": 112,
+    "code": "THESKYOFUNITY0526NEW",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 113,
+    "code": "NEXON",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 114,
+    "code": "RAID",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 115,
+    "code": "DOKIDOKIRAID",
+    "game": "bluearchive",
+    "status": "OK",
+    "rewards": "600 Pyroxene, 15 Superior Activity Report, 50 Advanced Activity Report, 200 Total Assault Coin, 200 Grand Assault Coin",
+    "source": "scraper"
+  },
+  {
+    "id": 116,
+    "code": "RUNEREADER",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 117,
+    "code": "HEAVYCALIBER310",
+    "game": "bluearchive",
+    "status": "OK",
+    "rewards": "600 Pyroxene",
+    "source": "scraper"
+  },
+  {
+    "id": 118,
+    "code": "PROMISEATSUNSET",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 119,
+    "code": "THANKYOUSENSEI",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 120,
+    "code": "ALWAYSWITHYOU",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 121,
+    "code": "SUMMERPRINCESS",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 122,
+    "code": "TRINITYIDOLPROJECT",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 123,
+    "code": "2021ARONACHAN",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 124,
+    "code": "MIRACLESBEGIN",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 125,
+    "code": "IMAGECHANGEMISSION",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 126,
+    "code": "PILLOWFIGHTNOA",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 127,
+    "code": "DEBUTAPR15TH",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 128,
+    "code": "NEXON2022COMEBACK",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 129,
+    "code": "ILUVU2021SENSEI",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 130,
+    "code": "HIDENSEEKKOYUKI",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 131,
+    "code": "DJSAORIONSTAGE",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 132,
+    "code": "WELCOMETOKIVOTOS2021",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 133,
+    "code": "EYEONTHEPRIZE",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 134,
+    "code": "IMONYOURSIDE",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 135,
+    "code": "TWINKLEMAGIC",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 136,
+    "code": "MIDNIGHTSNACKYUUKA",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 137,
+    "code": "GIFTFROMKANNA",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 138,
+    "code": "POLL",
+    "game": "bluearchive",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 139,
+    "code": "LATEST",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 140,
+    "code": "10000T",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 141,
+    "code": "MAGAZINE",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 142,
+    "code": "ARTICLES",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 143,
+    "code": "ENDFIELDGIFT",
+    "game": "endfield",
+    "status": "OK",
+    "rewards": "150 Oroberyl, 10000 T-Creds, 20 Intermediate Combat Records, 20 Arms INSP Kits",
+    "source": "scraper"
+  },
+  {
+    "id": 144,
+    "code": "PSM3",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 145,
+    "code": "PTCGP",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 146,
+    "code": "ABOUT",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 147,
+    "code": "ALLFIELD",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 148,
+    "code": "JOIN",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 149,
+    "code": "COMMUNITY",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 150,
+    "code": "ENDFIELD4PC",
+    "game": "endfield",
+    "status": "OK",
+    "rewards": "13000 T-Creds, 2 Advanced Combat Records, 2 Arms INSP Kits (PC only)",
+    "source": "scraper"
+  },
+  {
+    "id": 151,
+    "code": "QUICK",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 152,
+    "code": "ZAU2SYXHWX5L4ZH",
+    "game": "endfield",
+    "status": "OK",
+    "rewards": "5000 T-Creds, 10 Arms INSP Kits",
+    "source": "scraper"
+  },
+  {
+    "id": 153,
+    "code": "ACCOUNT",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 154,
+    "code": "CATEGORIES",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 155,
+    "code": "ACCESS",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 156,
+    "code": "BDSP",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 157,
+    "code": "INSP",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 158,
+    "code": "FIND",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 159,
+    "code": "INTERVIEW",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 160,
+    "code": "GRYPHLINE",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 161,
+    "code": "RETURNOFALL",
+    "game": "endfield",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "scraper"
+  },
+  {
+    "id": 162,
+    "code": "NEWTEST",
+    "game": "nte",
+    "status": "NOT_OK",
+    "rewards": "",
+    "source": "manual"
+  }
+]
