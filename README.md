@@ -2,12 +2,14 @@
 
 Auto-scrapes game redeem codes from news sites and exposes them via REST API.
 
+**Base URL:** `https://game-codes.onrender.com`
+
 ## Games
 
 | Slug | Game |
 |---|---|
 | `wuwa` | Wuthering Waves |
-| `nte` | Infinity Nikki |
+| `nte` | Neverness to Everness |
 | `bluearchive` | Blue Archive |
 | `endfield` | Arknights: Endfield |
 
