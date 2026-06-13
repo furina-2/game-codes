@@ -25,12 +25,12 @@ curl https://game-codes.onrender.com/codes?game=nte
 
 ## Games
 
-| Slug | Game | Active Codes |
-|---|---|---|
-| `wuwa` | Wuthering Waves | 1 verified |
-| `nte` | Neverness to Everness | 6 verified |
-| `bluearchive` | Blue Archive | 5 verified |
-| `endfield` | Arknights: Endfield | 3 verified |
+| Slug | Game | Description | Active Codes |
+|---|---|---|---|
+| `wuwa` | Wuthering Waves | Open-world action RPG by Kuro Games | 1 verified |
+| `nte` | Neverness to Everness | Urban fantasy open-world RPG | 6 verified |
+| `bluearchive` | Blue Archive | Tactical RPG with anime-style students | 5 verified |
+| `endfield` | Arknights: Endfield | 3D sci-fi RPG, sequel to Arknights | 3 verified |
 
 > Codes expire from source sites over time. The API auto-detects and removes expired codes hourly.
 
