@@ -21,6 +21,11 @@ async def update_codes() -> None:
                 where={"code": entry["code"], "game": game}
             )
             if existing:
+                if existing.status == CodeStatus.UNVERIFIED and not integration.has_web_redemption:
+                    await db.redeemcode.update(
+                        where={"id": existing.id},
+                        data={"status": CodeStatus.OK},
+                    )
                 continue
             status = await integration.check_code(entry["code"])
             await db.redeemcode.create(data={
@@ -58,6 +63,11 @@ async def check_codes() -> None:
     for code in codes:
         integration = get_integration(code.game)
         if not integration or not integration.has_web_redemption:
+            if code.status == CodeStatus.UNVERIFIED:
+                await db.redeemcode.update(
+                    where={"id": code.id},
+                    data={"status": CodeStatus.OK},
+                )
             continue
         new_status = await integration.verify_code(code.code)
         if new_status != code.status:
