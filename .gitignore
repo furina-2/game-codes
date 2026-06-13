@@ -6,3 +6,6 @@ uids.json
 logs/
 data.json
 game-codes.db
+build/
+*.egg-info/
+.vscode/
