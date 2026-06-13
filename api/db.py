@@ -78,10 +78,11 @@ class RedeemCodeStore:
         if SEED_FILE.exists() and SEED_FILE.resolve() != DATA_FILE.resolve():
             try:
                 json.loads(SEED_FILE.read_text("utf-8"))
+                DATA_FILE.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(SEED_FILE, DATA_FILE)
-                print(f"Seeded {DATA_FILE.name} from {SEED_FILE.name}")
-            except Exception:
-                pass
+                print(f"Seeded {DATA_FILE} from {SEED_FILE}")
+            except Exception as e:
+                print(f"Seed failed: {e}")
 
     def _restore_from_backup(self) -> None:
         if DATA_FILE.exists():
