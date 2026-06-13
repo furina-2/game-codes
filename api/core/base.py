@@ -29,5 +29,5 @@ class GameIntegration(ABC):
 
     async def check_code(self, code: str) -> CodeStatus:
         if not self.has_web_redemption:
-            return CodeStatus.UNVERIFIED
+            return CodeStatus.OK
         return await self.verify_code(code)

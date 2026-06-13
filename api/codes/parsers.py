@@ -62,6 +62,7 @@ NOISE_WORDS: set[str] = {
     "ENGLISH", "SPANISH", "FRENCH", "GERMAN", "JAPANESE", "KOREAN",
     "CHINESE", "RUSSIAN", "ARABIC", "HINDI",
     "PSM3", "PTCGP", "BDSP", "ST79", "C2000", "B100", "M1000",
+    "INFERNO", "MANISH", "FIND",
 }
 
 NOISE_PREFIXES: tuple[str, ...] = (
@@ -79,6 +80,8 @@ def _is_noise(code: str) -> bool:
     if re.match(r'^[A-Z][a-z]{2,}$', code):
         return True
     if re.match(r'^[A-Z]{2,3}\d{2,}$', code):
+        return True
+    if re.match(r'^\d{5,}', code):
         return True
     half = len(code) // 2
     if len(code) >= 8 and len(code) % 2 == 0 and code[:half] == code[half:]:
