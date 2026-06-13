@@ -43,13 +43,28 @@ class RedeemCodeStore:
         self._next_id = 1
 
     async def connect(self) -> None:
-        self._seed_from_repo()
         self._migrate_from_sqlite()
-        self._restore_from_backup()
+        loaded = False
         if DATA_FILE.exists():
-            raw = json.loads(DATA_FILE.read_text("utf-8"))
-            self._records = [Record(**r) for r in raw]
-            self._next_id = max((r.id for r in self._records), default=0) + 1
+            try:
+                raw = json.loads(DATA_FILE.read_text("utf-8"))
+                if raw:
+                    self._records = [Record(**r) for r in raw]
+                    self._next_id = max((r.id for r in self._records), default=0) + 1
+                    loaded = True
+            except Exception:
+                pass
+        if not loaded and SEED_FILE.exists():
+            try:
+                raw = json.loads(SEED_FILE.read_text("utf-8"))
+                if raw:
+                    self._records = [Record(**r) for r in raw]
+                    self._next_id = max((r.id for r in self._records), default=0) + 1
+                    logger.info(f"Loaded {len(raw)} records from {SEED_FILE}")
+                self._save()
+            except Exception as e:
+                logger.warning(f"Failed to load seed: {e}")
+        self._restore_from_backup()
 
     async def disconnect(self) -> None:
         pass

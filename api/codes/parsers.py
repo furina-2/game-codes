@@ -80,6 +80,9 @@ def _is_noise(code: str) -> bool:
         return True
     if re.match(r'^[A-Z]{2,3}\d{2,}$', code):
         return True
+    half = len(code) // 2
+    if len(code) >= 8 and len(code) % 2 == 0 and code[:half] == code[half:]:
+        return True
     return False
 
 
