@@ -32,6 +32,10 @@ async def update_codes() -> None:
             })
             logger.info(f"Added code {entry['code']} for {game}")
 
+        if not scraped_set:
+            logger.warning(f"Empty scrape for {game}, skipping expiry")
+            continue
+
         active = await db.redeemcode.find_many(
             where={"game": game, "status": {"in": [CodeStatus.OK, CodeStatus.UNVERIFIED]}}
         )
