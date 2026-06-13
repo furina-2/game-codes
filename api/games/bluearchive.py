@@ -10,7 +10,7 @@ from api.utils import load_cookies, load_uids
 
 class BlueArchiveIntegration(GameIntegration):
     game = Game.bluearchive
-    has_web_redemption = True
+    has_web_redemption = False
 
     async def get_auth(self) -> dict:
         cookies = load_cookies()
