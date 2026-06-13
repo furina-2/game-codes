@@ -40,6 +40,7 @@ class RedeemCodeStore:
         self._next_id = 1
 
     async def connect(self) -> None:
+        self._seed_from_repo()
         self._migrate_from_sqlite()
         self._restore_from_backup()
         if DATA_FILE.exists():
@@ -69,6 +70,17 @@ class RedeemCodeStore:
             print(f"Migrated {len(records)} records from {DB_FILE.name} to {DATA_FILE.name}")
         except Exception:
             pass
+
+    def _seed_from_repo(self) -> None:
+        if DATA_FILE.exists():
+            return
+        if SEED_FILE.exists() and SEED_FILE.resolve() != DATA_FILE.resolve():
+            try:
+                json.loads(SEED_FILE.read_text("utf-8"))
+                shutil.copy2(SEED_FILE, DATA_FILE)
+                print(f"Seeded {DATA_FILE.name} from {SEED_FILE.name}")
+            except Exception:
+                pass
 
     def _restore_from_backup(self) -> None:
         if DATA_FILE.exists():
