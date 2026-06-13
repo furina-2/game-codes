@@ -2,12 +2,20 @@
 
 [![Status](https://img.shields.io/badge/status-live-brightgreen)](https://game-codes.onrender.com)
 [![Render](https://img.shields.io/badge/deployed%20on-Render-46E3B7)](https://render.com)
+[![WispByte](https://img.shields.io/badge/deployed%20on-WispByte-6366f1)](https://wispbyte.com)
 [![Python](https://img.shields.io/badge/python-3.14-blue)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.136-009688)](https://fastapi.tiangolo.com)
 
 Auto-scrapes game redeem codes from news sites. Always up-to-date, refreshed hourly.
 
-**Base URL:** `https://game-codes.onrender.com`
+**Endpoints:**
+
+| Platform | URL |
+|---|---|
+| Render | `https://game-codes.onrender.com` |
+| WispByte | `https://game-codes.wisp.uno` |
+
+> All examples below use the Render URL. Replace with the WispByte URL if preferred.
 
 ---
 
