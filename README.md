@@ -1,6 +1,6 @@
 # Game Codes API
 
-![banner](banner.png)
+![banner](assets/banner.png)
 
 [![Status](https://img.shields.io/badge/status-live-brightgreen)](https://game-codes.onrender.com)
 [![Render](https://img.shields.io/badge/deployed%20on-Render-46E3B7)](https://render.com)
