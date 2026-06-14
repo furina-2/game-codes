@@ -7,6 +7,8 @@ from fastapi import Depends, FastAPI, HTTPException, Security
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from loguru import logger
 
+from datetime import datetime, timezone
+
 from api.config import settings
 from api.constants import CodeStatus, Game, GAME_DESCRIPTIONS, GAME_NAMES
 from api.codes.task import check_codes, update_codes
@@ -89,11 +91,11 @@ async def get_codes(game: str):
     return {
         "game": game,
         "codes": [
-            {"id": c.id, "code": c.code, "rewards": c.rewards, "source": c.source}
+            {"id": c.id, "code": c.code, "rewards": c.rewards, "source": c.source, "created_at": c.created_at, "expires_at": c.expires_at}
             for c in codes
         ],
         "unverified": [
-            {"id": c.id, "code": c.code, "rewards": c.rewards, "source": c.source}
+            {"id": c.id, "code": c.code, "rewards": c.rewards, "source": c.source, "created_at": c.created_at, "expires_at": c.expires_at}
             for c in unverified
         ],
     }
@@ -112,6 +114,7 @@ async def add_code(data: CreateCode, _=Depends(verify_token)):
         "status": CodeStatus.UNVERIFIED,
         "rewards": "",
         "source": "manual",
+        "created_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     })
     return {"id": created.id, "code": created.code}
 

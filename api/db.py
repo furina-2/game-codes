@@ -24,6 +24,8 @@ class Record:
         self.status: str = kwargs.get("status", "UNVERIFIED")
         self.rewards: str = kwargs.get("rewards", "")
         self.source: str = kwargs.get("source", "")
+        self.created_at: str = kwargs.get("created_at", "")
+        self.expires_at: str = kwargs.get("expires_at", "")
 
     def dict(self) -> dict[str, Any]:
         return {
@@ -33,6 +35,8 @@ class Record:
             "status": self.status,
             "rewards": self.rewards,
             "source": self.source,
+            "created_at": self.created_at,
+            "expires_at": self.expires_at,
         }
 
 

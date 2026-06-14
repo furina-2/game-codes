@@ -104,6 +104,13 @@ def _find_code_patterns(text: str) -> list[str]:
     return found
 
 
+_DATE_PATTERN = re.compile(
+    r"\d{1,2}/\d{1,2}/\d{4}|\d{4}-\d{2}-\d{2}|"
+    r"(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+\d{1,2},?\s+\d{4}",
+    re.IGNORECASE
+)
+
+
 def _parse_tables(soup: BeautifulSoup) -> list[dict]:
     results: list[dict] = []
     for table in soup.find_all("table"):
@@ -111,16 +118,24 @@ def _parse_tables(soup: BeautifulSoup) -> list[dict]:
         for row in rows:
             cells = row.find_all(["td", "th"])
             codes_in_row: list[str] = []
-            rewards_text = ""
-            for i, cell in enumerate(cells):
+            extra_cells: list[str] = []
+            for cell in cells:
                 text = cell.get_text(" ", strip=True)
                 found = _find_code_patterns(text)
                 if found:
                     codes_in_row.extend(found)
-                elif i > 0 and not rewards_text and len(text) > 3:
-                    rewards_text = text
+                elif len(text) > 3:
+                    extra_cells.append(text)
+            rewards_text = ""
+            expires_text = ""
+            for t in extra_cells:
+                if re.search(r"expir", t, re.IGNORECASE) or _DATE_PATTERN.search(t) or t.upper() in ("TBA", "N/A"):
+                    if not expires_text:
+                        expires_text = t
+                elif not rewards_text:
+                    rewards_text = t
             for code in codes_in_row:
-                results.append({"code": code, "rewards": rewards_text})
+                results.append({"code": code, "rewards": rewards_text, "expires_at": expires_text})
     return results
 
 

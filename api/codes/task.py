@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datetime import datetime, timezone
+
 from loguru import logger
 from api.constants import CodeStatus
 
@@ -31,13 +33,21 @@ async def update_codes() -> None:
                         where={"id": existing.id},
                         data={"rewards": entry["rewards"]},
                     )
+                if entry.get("expires_at") and not existing.expires_at:
+                    await db.redeemcode.update(
+                        where={"id": existing.id},
+                        data={"expires_at": entry["expires_at"]},
+                    )
                 continue
+            now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
             status = await integration.check_code(entry["code"])
             await db.redeemcode.create(data={
                 "code": entry["code"],
                 "game": game,
                 "status": status,
                 "rewards": entry.get("rewards", ""),
+                "expires_at": entry.get("expires_at", ""),
+                "created_at": now,
                 "source": "scraper",
             })
             logger.info(f"Added code {entry['code']} for {game}")
