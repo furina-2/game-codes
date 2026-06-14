@@ -2,49 +2,49 @@
 
 ![banner](assets/banner.png)
 
-[![Status](https://img.shields.io/badge/status-live-brightgreen)](https://game-codes.onrender.com)
-[![Render](https://img.shields.io/badge/deployed%20on-Render-46E3B7)](https://render.com)
+[![Status](https://img.shields.io/badge/status-live-brightgreen)](https://game-codes.wisp.uno)
 [![WispByte](https://img.shields.io/badge/deployed%20on-WispByte-6366f1)](https://wispbyte.com)
+[![Render](https://img.shields.io/badge/deployed%20on-Render-46E3B7)](https://render.com)
 [![Python](https://img.shields.io/badge/python-3.14-blue)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.136-009688)](https://fastapi.tiangolo.com)
 
 **Live code counts:**
 
-[![WuWa](https://img.shields.io/badge/dynamic/json?url=https://game-codes.onrender.com/stats&query=%24.wuwa.codes&label=WuWa&color=yellow)](https://game-codes.onrender.com/codes?game=wuwa)
-[![NTE](https://img.shields.io/badge/dynamic/json?url=https://game-codes.onrender.com/stats&query=%24.nte.codes&label=NTE&color=blue)](https://game-codes.onrender.com/codes?game=nte)
-[![Blue Archive](https://img.shields.io/badge/dynamic/json?url=https://game-codes.onrender.com/stats&query=%24.bluearchive.codes&label=Blue%20Archive&color=purple)](https://game-codes.onrender.com/codes?game=bluearchive)
-[![Endfield](https://img.shields.io/badge/dynamic/json?url=https://game-codes.onrender.com/stats&query=%24.endfield.codes&label=Endfield&color=red)](https://game-codes.onrender.com/codes?game=endfield)
+[![WuWa](https://img.shields.io/badge/dynamic/json?url=https://game-codes.wisp.uno/stats&query=%24.wuwa.codes&label=WuWa&color=yellow)](https://game-codes.wisp.uno/codes?game=wuwa)
+[![NTE](https://img.shields.io/badge/dynamic/json?url=https://game-codes.wisp.uno/stats&query=%24.nte.codes&label=NTE&color=blue)](https://game-codes.wisp.uno/codes?game=nte)
+[![Blue Archive](https://img.shields.io/badge/dynamic/json?url=https://game-codes.wisp.uno/stats&query=%24.bluearchive.codes&label=Blue%20Archive&color=purple)](https://game-codes.wisp.uno/codes?game=bluearchive)
+[![Endfield](https://img.shields.io/badge/dynamic/json?url=https://game-codes.wisp.uno/stats&query=%24.endfield.codes&label=Endfield&color=red)](https://game-codes.wisp.uno/codes?game=endfield)
 
 Auto-scrapes game redeem codes from news sites. Always up-to-date, refreshed hourly.
 
 **Endpoints:**
 
 | Platform | URL |
-|---|---|
-| Render | `https://game-codes.onrender.com` |
-| WispByte | `https://game-codes.wisp.uno` |
+|---|---|---|
+| **WispByte** _(primary)_ | **`https://game-codes.wisp.uno`** |
+| Render | `https://game-codes.wisp.uno` |
 | Vercel | `https://game-codes-psi.vercel.app` |
 
-> All examples below use the Render URL. Replace with any deployment URL as needed.
+> All examples below use the **WispByte** URL. Replace with any deployment URL as needed.
 
 ## Quick Start
 
 ```bash
 # List all games
-curl https://game-codes.onrender.com/games
+curl https://game-codes.wisp.uno/games
 
 # Get verified codes for a game
-curl https://game-codes.onrender.com/codes?game=nte
+curl https://game-codes.wisp.uno/codes?game=nte
 ```
 
 ## Games
 
 | Slug | Game | Description | Active Codes |
 |---|---|---|---|
-| `wuwa` | Wuthering Waves | Open-world action RPG by Kuro Games | ![4](https://img.shields.io/badge/dynamic/json?url=https://game-codes.onrender.com/stats&query=%24.wuwa.codes&label=&color=yellow) |
-| `nte` | Neverness to Everness | Urban fantasy open-world RPG | ![6](https://img.shields.io/badge/dynamic/json?url=https://game-codes.onrender.com/stats&query=%24.nte.codes&label=&color=blue) |
-| `bluearchive` | Blue Archive | Tactical RPG with anime-style students | ![6](https://img.shields.io/badge/dynamic/json?url=https://game-codes.onrender.com/stats&query=%24.bluearchive.codes&label=&color=purple) |
-| `endfield` | Arknights: Endfield | 3D sci-fi RPG, sequel to Arknights | ![3](https://img.shields.io/badge/dynamic/json?url=https://game-codes.onrender.com/stats&query=%24.endfield.codes&label=&color=red) |
+| `wuwa` | Wuthering Waves | Open-world action RPG by Kuro Games | ![1](https://img.shields.io/badge/dynamic/json?url=https://game-codes.wisp.uno/stats&query=%24.wuwa.codes&label=&color=yellow) |
+| `nte` | Neverness to Everness | Urban fantasy open-world RPG | ![6](https://img.shields.io/badge/dynamic/json?url=https://game-codes.wisp.uno/stats&query=%24.nte.codes&label=&color=blue) |
+| `bluearchive` | Blue Archive | Tactical RPG with anime-style students | ![4](https://img.shields.io/badge/dynamic/json?url=https://game-codes.wisp.uno/stats&query=%24.bluearchive.codes&label=&color=purple) |
+| `endfield` | Arknights: Endfield | 3D sci-fi RPG, sequel to Arknights | ![3](https://img.shields.io/badge/dynamic/json?url=https://game-codes.wisp.uno/stats&query=%24.endfield.codes&label=&color=red) |
 
 > Codes expire from source sites over time. The API auto-detects and removes expired codes hourly.
 
@@ -55,7 +55,7 @@ curl https://game-codes.onrender.com/codes?game=nte
 Check if the service is alive.
 
 ```bash
-curl https://game-codes.onrender.com/health
+curl https://game-codes.wisp.uno/health
 ```
 
 ```json
@@ -67,7 +67,7 @@ curl https://game-codes.onrender.com/health
 List all supported games.
 
 ```bash
-curl https://game-codes.onrender.com/games
+curl https://game-codes.wisp.uno/games
 ```
 
 ```json
@@ -104,7 +104,7 @@ Returns verified and unverified codes for a game.
 - `rewards` — reward description (auto-extracted from table sources; may be empty for non-table sources)
 
 ```bash
-curl https://game-codes.onrender.com/codes?game=nte
+curl https://game-codes.wisp.uno/codes?game=nte
 ```
 
 ```json
@@ -165,7 +165,7 @@ curl -H "Authorization: Bearer YOUR_TOKEN" ...
 Manually add a code.
 
 ```bash
-curl -X POST https://game-codes.onrender.com/codes \
+curl -X POST https://game-codes.wisp.uno/codes \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"code": "MYCODE123", "game": "wuwa"}'
@@ -180,7 +180,7 @@ curl -X POST https://game-codes.onrender.com/codes \
 Remove a code by its ID.
 
 ```bash
-curl -X DELETE https://game-codes.onrender.com/codes/42 \
+curl -X DELETE https://game-codes.wisp.uno/codes/42 \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -193,7 +193,7 @@ curl -X DELETE https://game-codes.onrender.com/codes/42 \
 Force an immediate scrape of all source sites.
 
 ```bash
-curl -X POST https://game-codes.onrender.com/update-codes \
+curl -X POST https://game-codes.wisp.uno/update-codes \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -206,7 +206,7 @@ curl -X POST https://game-codes.onrender.com/update-codes \
 Re-verify codes against game redemption APIs (only for games that support it).
 
 ```bash
-curl -X POST https://game-codes.onrender.com/check-codes \
+curl -X POST https://game-codes.wisp.uno/check-codes \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -252,14 +252,14 @@ Exceeding the limit returns `429`:
 | Game | Sources |
 |---|---|
 | WuWa | GamesRadar, GameRant, PCGamesN, wuthering.gg |
-| NTE | GamesRadar, Game8, GameWith |
-| Blue Archive | GameRant, Dexerto, Eurogamer, Pocket Tactics |
+| NTE | GamesRadar, Game8, GameWith, Polygon |
+| Blue Archive | Dexerto, Eurogamer, Pocket Tactics |
 | Endfield | GamesRadar, Game8 |
 
 ## Self-Host
 
 ```bash
-git clone https://github.com/zylo158/game-codes
+git clone https://github.com/furina-2/game-codes
 cd game-codes
 
 python -m venv .venv
@@ -273,7 +273,7 @@ pip install -r requirements.txt
 python run.py
 ```
 
-Requires Python 3.11+. No database — everything stored in `data.json`.
+Requires Python 3.11+. No database — everything stored in `seed.json`.
 
 ## FAQ
 
@@ -296,10 +296,12 @@ As long as they appear on at least one source site. The hourly scrape checks all
 The deduplication merge and noise filter may reject some entries. Also, codes must appear in structured HTML (tables, lists, article bodies) — plain text buried in comments or scripts is skipped.
 
 **No database?**  
-Correct. Everything is stored in `data.json` with atomic writes and automatic backup recovery. No Postgres, no SQLite.
+Correct. Everything is stored in `seed.json` with atomic writes and automatic backup recovery. No Postgres, no SQLite.
 
 ## Notes
 
-- Hosted on Render free tier — may spin down after inactivity. First request may take 3-5s to wake up.
-- Codes are stored as a JSON file in the repo. Data resets on deploy but the hourly scheduler re-populates it.
+- **Primary:** WispByte (`game-codes.wisp.uno`) — always hot, no cold start.
+- **Fallback:** Render (`game-codes.onrender.com`) — free tier may spin down after inactivity; first request takes 3-5s to wake up.
+- **Vercel:** (`game-codes-psi.vercel.app`) — no background scheduler; relies on webhook from Render's scrape.
+- Codes are stored as `data.json` (gitignored) seeded from `seed.json` (tracked). Data resets on fresh deploy but the hourly scheduler re-populates it.
 - The scraper filters noise (nav text, common words, product IDs) and detects duplicate patterns automatically.
