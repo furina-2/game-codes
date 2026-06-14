@@ -71,6 +71,7 @@ NOISE_WORDS: set[str] = {
     "THESKYOFUNITY0526",
     "MIDNIGHTSNACKYUUKA", "HIDENSEEKKOYUKI", "PILLOWFIGHTNOA",
     "RUNEREADER", "RABBITHOLE",
+    "NTE0429", "NTEVTUBER200",
 }
 
 NOISE_PREFIXES: tuple[str, ...] = (
@@ -246,6 +247,10 @@ def parse_pockettactics(html: str) -> list[dict]:
     return _parse_generic(html)
 
 
+def parse_polygon(html: str) -> list[dict]:
+    return _parse_generic(html)
+
+
 _PARSERS: dict[CodeSource, ParserFunc] = {
     CodeSource.GAMESRADAR: parse_gamesradar,
     CodeSource.GAMERANT: parse_gamerant,
@@ -257,6 +262,7 @@ _PARSERS: dict[CodeSource, ParserFunc] = {
     CodeSource.WUTHERINGGG: parse_wutheringgg,
     CodeSource.EUROGAMER: parse_eurogamer,
     CodeSource.POCKETTACTICS: parse_pockettactics,
+    CodeSource.POLYGON: parse_polygon,
 }
 
 
