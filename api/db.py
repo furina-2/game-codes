@@ -157,6 +157,7 @@ class RedeemCodeStore:
                 _cache.set("game-codes:records", data, {"ttl": 86400})
             except Exception:
                 logger.warning("RuntimeCache write failed")
+            return
         self._write_json(data)
 
     def _matches(self, record: Record, where: dict[str, Any]) -> bool:
