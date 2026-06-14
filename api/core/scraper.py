@@ -44,16 +44,12 @@ async def scrape_game_codes(game_slug: str) -> list[dict]:
     ]
     results = await asyncio.gather(*tasks)
 
-    seen: dict[str, dict] = {}
+    seen: dict[str, str] = {}
     for entries in results:
         for entry in entries:
             code = entry["code"].upper()
-            if code not in seen:
-                seen[code] = {"rewards": entry.get("rewards", ""), "expires_at": entry.get("expires_at", "")}
-            else:
-                if entry.get("rewards") and not seen[code]["rewards"]:
-                    seen[code]["rewards"] = entry["rewards"]
-                if entry.get("expires_at") and not seen[code]["expires_at"]:
-                    seen[code]["expires_at"] = entry["expires_at"]
+            rewards = entry.get("rewards", "")
+            if code not in seen or (rewards and not seen[code]):
+                seen[code] = rewards
 
-    return [{"code": c, "game": game_slug, **v} for c, v in seen.items()]
+    return [{"code": c, "game": game_slug, "rewards": r} for c, r in seen.items()]
