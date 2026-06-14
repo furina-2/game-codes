@@ -6,7 +6,9 @@ from contextlib import asynccontextmanager
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import Depends, FastAPI, HTTPException, Security
+from fastapi.responses import FileResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from fastapi.staticfiles import StaticFiles
 from loguru import logger
 
 from api.config import settings
@@ -52,9 +54,14 @@ async def _initial_update():
 
 app = FastAPI(title="Game Codes API", lifespan=lifespan)
 app.add_middleware(RateLimitMiddleware, max_requests=30, window=60)
+app.mount("/static", StaticFiles(directory="api/static"), name="static")
 
 
-@app.get("/")
+@app.get("/", response_class=FileResponse)
+async def index():
+    return FileResponse("api/static/index.html")
+
+
 @app.get("/health")
 async def health():
     return {"status": "ok"}
