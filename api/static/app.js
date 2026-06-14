@@ -1,7 +1,7 @@
 const GAMES = ["wuwa", "nte", "bluearchive", "endfield"];
 const GAME_LABELS = { wuwa: "Wuthering Waves", nte: "Neverness to Everness", bluearchive: "Blue Archive", endfield: "Arknights: Endfield" };
-const GAME_ICONS = { wuwa: "\u{1F30A}", nte: "\u{1F303}", bluearchive: "\u{1F4DA}", endfield: "\u{1F4A0}" };
-const GAME_COLORS = { wuwa: "#eab308", nte: "#3b82f6", bluearchive: "#a855f7", endfield: "#ef4444" };
+const GAME_SHORT = { wuwa: "WW", nte: "NTE", bluearchive: "BA", endfield: "EF" };
+const GAME_LOGO_COLORS = { wuwa: "#eab308", nte: "#3b82f6", bluearchive: "#a855f7", endfield: "#ef4444" };
 
 let currentGame = "wuwa";
 
@@ -15,7 +15,7 @@ function updateStats(stats) {
   const row = document.getElementById("statsRow");
   row.innerHTML = GAMES.map(slug => {
     const g = stats[slug] || { codes: 0, unverified: 0 };
-    return `<span class="stat-badge" style="color:${GAME_COLORS[slug]}">${GAME_LABELS[slug]}: ${g.codes} active</span>`;
+    return `<span class="stat-badge" style="color:${GAME_LOGO_COLORS[slug]}">${GAME_LABELS[slug]}: ${g.codes} active</span>`;
   }).join("");
 }
 
@@ -66,15 +66,45 @@ async function handleCopy(e) {
   } catch {}
 }
 
-function renderSelect() {
-  const sel = document.getElementById("gameSelect");
-  sel.innerHTML = GAMES.map(slug =>
-    `<option value="${slug}"${slug === currentGame ? " selected" : ""}>${GAME_ICONS[slug]} ${GAME_LABELS[slug]}</option>`
-  ).join("");
-  sel.addEventListener("change", e => {
-    currentGame = e.target.value;
+function renderDropdown() {
+  const trigger = document.getElementById("dropdownTrigger");
+  const menu = document.getElementById("dropdownMenu");
+
+  function renderTrigger(slug) {
+    trigger.innerHTML = `<span class="logo-badge" style="background:${GAME_LOGO_COLORS[slug]}">${GAME_SHORT[slug]}</span>${GAME_LABELS[slug]}`;
+  }
+
+  function renderOptions() {
+    menu.innerHTML = GAMES.map(slug =>
+      `<button class="dropdown-option${slug === currentGame ? " selected" : ""}" data-game="${slug}">
+        <span class="logo-badge" style="background:${GAME_LOGO_COLORS[slug]}">${GAME_SHORT[slug]}</span>
+        ${GAME_LABELS[slug]}
+      </button>`
+    ).join("");
+  }
+
+  function open() { menu.classList.add("open"); trigger.classList.add("open"); }
+  function close() { menu.classList.remove("open"); trigger.classList.remove("open"); }
+
+  renderTrigger(currentGame);
+  renderOptions();
+
+  trigger.addEventListener("click", e => {
+    e.stopPropagation();
+    menu.classList.contains("open") ? close() : open();
+  });
+
+  menu.addEventListener("click", e => {
+    const opt = e.target.closest(".dropdown-option");
+    if (!opt) return;
+    currentGame = opt.dataset.game;
+    renderTrigger(currentGame);
+    renderOptions();
+    close();
     loadCodes(currentGame);
   });
+
+  document.addEventListener("click", close);
 }
 
 async function loadCodes(slug) {
@@ -95,7 +125,7 @@ async function loadAll() {
   } catch {}
   const now = new Date();
   document.getElementById("lastUpdate").textContent = `Updated ${now.toLocaleTimeString()}`;
-  renderSelect();
+  renderDropdown();
   loadCodes(currentGame);
 }
 
