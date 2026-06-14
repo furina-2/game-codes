@@ -65,19 +65,13 @@ async function handleCopy(e) {
   } catch {}
 }
 
-function renderTabs() {
-  const nav = document.getElementById("tabs");
-  nav.innerHTML = GAMES.map(slug =>
-    `<button class="tab${slug === currentGame ? " active" : ""}" data-game="${slug}">${GAME_LABELS[slug]}</button>`
+function renderSelect() {
+  const sel = document.getElementById("gameSelect");
+  sel.innerHTML = GAMES.map(slug =>
+    `<option value="${slug}"${slug === currentGame ? " selected" : ""}>${GAME_LABELS[slug]}</option>`
   ).join("");
-  nav.addEventListener("click", e => {
-    const btn = e.target.closest(".tab");
-    if (!btn) return;
-    const slug = btn.dataset.game;
-    if (slug === currentGame) return;
-    currentGame = slug;
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-    btn.classList.add("active");
+  sel.addEventListener("change", e => {
+    currentGame = e.target.value;
     loadCodes(currentGame);
   });
 }
@@ -100,7 +94,7 @@ async function loadAll() {
   } catch {}
   const now = new Date();
   document.getElementById("lastUpdate").textContent = `Updated ${now.toLocaleTimeString()}`;
-  renderTabs();
+  renderSelect();
   loadCodes(currentGame);
 }
 
