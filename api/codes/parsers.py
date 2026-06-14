@@ -148,9 +148,11 @@ def _extract_rewards(text: str, code: str) -> str:
     after = text[idx + len(code):].strip()
     after = re.sub(r'^[\s:–\-|,;.]+', '', after).strip()
     after = re.sub(r'(?:latest|new)!?\s*$', '', after, flags=re.I).strip()
-    after = re.sub(r'([a-z])([A-Z])', r'\1 \2', after)
     after = re.sub(r'(?<=\S)\(', ' (', after)
     after = re.sub(r'\)(?=\S)', ') ', after)
+    after = re.sub(r'\[', ' [', after)
+    after = re.sub(r'\s+', ' ', after)
+    after = after.strip().rstrip(':;,.-– ').strip()
     return after
 
 
