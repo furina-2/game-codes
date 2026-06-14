@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import os
 from contextlib import asynccontextmanager
 
@@ -36,7 +37,6 @@ async def lifespan(app: FastAPI):
             check_codes, "cron", hour=1, minute=30, timezone="Asia/Taipei", id="check"
         )
         scheduler.start()
-        import asyncio
         asyncio.create_task(_initial_update())
     logger.info("Started scheduler")
     yield

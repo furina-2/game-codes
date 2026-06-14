@@ -6,4 +6,4 @@ lxml>=5.3
 apscheduler>=3.11
 pydantic-settings>=2.7
 loguru>=0.7
-vercel>=1.0
+vercel>=0.5
