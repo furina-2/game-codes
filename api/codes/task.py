@@ -37,10 +37,14 @@ async def update_codes() -> None:
                             f"Reactivated {entry['code']} for {game}: "
                             f"{existing.status} -> {new_status}"
                         )
-                if entry.get("rewards") and not existing.rewards:
+                if entry.get("rewards") and entry["rewards"] != existing.rewards:
                     await db.redeemcode.update(
                         where={"id": existing.id},
                         data={"rewards": entry["rewards"]},
+                    )
+                    logger.info(
+                        f"Updated rewards for {entry['code']} for {game}: "
+                        f"'{existing.rewards[:50]}' -> '{entry['rewards'][:50]}'"
                     )
                 continue
             status = await integration.check_code(entry["code"])
