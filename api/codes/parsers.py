@@ -139,11 +139,25 @@ def _parse_tables(soup: BeautifulSoup) -> list[dict]:
     return results
 
 
-def _parse_structured_elements(soup: BeautifulSoup) -> list[str]:
-    codes: list[str] = []
+def _extract_rewards(text: str, code: str) -> str:
+    lower_text = text.lower()
+    lower_code = code.lower()
+    idx = lower_text.find(lower_code)
+    if idx == -1:
+        return ""
+    after = text[idx + len(code):].strip()
+    after = re.sub(r'^[\s:–\-|,;.]+', '', after).strip()
+    after = re.sub(r'(?:latest|new)!?\s*$', '', after, flags=re.I).strip()
+    return after
+
+
+def _parse_structured_elements(soup: BeautifulSoup) -> list[dict]:
+    results: list[dict] = []
     for tag in soup.find_all(["code", "strong", "b", "li"]):
+        if tag.name != "li" and tag.find_parent("li"):
+            continue
         text = tag.get_text(strip=True)
-        if len(text) < 100:
+        if len(text) < 300:
             heading = tag.find_previous(["h1", "h2", "h3", "h4"])
             if heading and "expir" in heading.get_text(strip=True).lower():
                 continue
@@ -151,8 +165,10 @@ def _parse_structured_elements(soup: BeautifulSoup) -> list[str]:
                 found = [c for c in _find_code_patterns(text) if text != c]
             else:
                 found = _find_code_patterns(text)
-            codes.extend(found)
-    return codes
+            for c in found:
+                rewards = _extract_rewards(text, c) if tag.name == "li" else ""
+                results.append({"code": c, "rewards": rewards})
+    return results
 
 
 def _parse_full_text(soup: BeautifulSoup) -> list[str]:
@@ -166,17 +182,18 @@ def _parse_full_text(soup: BeautifulSoup) -> list[str]:
 def _parse_generic(html: str) -> list[dict]:
     soup = BeautifulSoup(html, "lxml")
     table_results = _parse_tables(soup)
-    table_codes: set[str] = {r["code"] for r in table_results}
     rewards_map: dict[str, str] = {r["code"]: r["rewards"] for r in table_results if r["rewards"]}
-    codes: list[str] = _parse_structured_elements(soup)
+    structured: list[dict] = _parse_structured_elements(soup)
     seen: set[str] = set()
     results: list[dict] = []
     seen.update(r["code"] for r in table_results)
     results.extend(table_results)
-    for c in codes:
+    for entry in structured:
+        c = entry["code"]
         if c not in seen:
             seen.add(c)
-            results.append({"code": c, "rewards": rewards_map.get(c, "")})
+            rewards = entry["rewards"] or rewards_map.get(c, "")
+            results.append({"code": c, "rewards": rewards})
     return results
 
 
