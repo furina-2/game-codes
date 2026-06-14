@@ -50,7 +50,7 @@ async def health():
 
 
 @app.get("/stats")
-async def get_stats():
+async def stats():
     result = {}
     for slug in Game.values():
         codes = await db.redeemcode.find_many(
