@@ -1,5 +1,6 @@
 const GAMES = ["wuwa", "nte", "bluearchive", "endfield"];
 const GAME_LABELS = { wuwa: "Wuthering Waves", nte: "Neverness to Everness", bluearchive: "Blue Archive", endfield: "Arknights: Endfield" };
+const GAME_ICONS = { wuwa: "\u{1F30A}", nte: "\u{1F303}", bluearchive: "\u{1F4DA}", endfield: "\u{1F4A0}" };
 const GAME_COLORS = { wuwa: "#eab308", nte: "#3b82f6", bluearchive: "#a855f7", endfield: "#ef4444" };
 
 let currentGame = "wuwa";
@@ -68,7 +69,7 @@ async function handleCopy(e) {
 function renderSelect() {
   const sel = document.getElementById("gameSelect");
   sel.innerHTML = GAMES.map(slug =>
-    `<option value="${slug}"${slug === currentGame ? " selected" : ""}>${GAME_LABELS[slug]}</option>`
+    `<option value="${slug}"${slug === currentGame ? " selected" : ""}>${GAME_ICONS[slug]} ${GAME_LABELS[slug]}</option>`
   ).join("");
   sel.addEventListener("change", e => {
     currentGame = e.target.value;
