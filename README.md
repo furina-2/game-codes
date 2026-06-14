@@ -24,8 +24,6 @@ Auto-scrapes game redeem codes from news sites. Always up-to-date, refreshed hou
 
 > All examples below use the Render URL. Replace with the WispByte URL if preferred.
 
----
-
 ## Quick Start
 
 ```bash
@@ -35,8 +33,6 @@ curl https://game-codes.onrender.com/games
 # Get verified codes for a game
 curl https://game-codes.onrender.com/codes?game=nte
 ```
-
----
 
 ## Games
 
@@ -48,8 +44,6 @@ curl https://game-codes.onrender.com/codes?game=nte
 | `endfield` | Arknights: Endfield | 3D sci-fi RPG, sequel to Arknights | 3 verified |
 
 > Codes expire from source sites over time. The API auto-detects and removes expired codes hourly.
-
----
 
 ## API Reference
 
@@ -64,8 +58,6 @@ curl https://game-codes.onrender.com/health
 ```json
 {"status": "ok"}
 ```
-
----
 
 ### `GET /games`
 
@@ -95,8 +87,6 @@ curl https://game-codes.onrender.com/games
   }
 }
 ```
-
----
 
 ### `GET /codes?game={slug}`
 
@@ -158,8 +148,6 @@ curl https://game-codes.onrender.com/codes?game=nte
   "unverified": []
 }
 ```
-
----
 
 ### Auth endpoints
 
@@ -223,8 +211,6 @@ curl -X POST https://game-codes.onrender.com/check-codes \
 {"ok": true}
 ```
 
----
-
 ## Scheduling
 
 The server runs these jobs automatically:
@@ -234,8 +220,6 @@ The server runs these jobs automatically:
 | `update-codes` | Every hour | Scrapes news sites for new codes, expires codes no longer found |
 | `check-codes` | Daily 1:30 AM (Asia/Taipei) | Re-verifies known codes against game redemption APIs |
 
----
-
 ## Error Responses
 
 | Status | Code | When |
@@ -244,8 +228,6 @@ The server runs these jobs automatically:
 | `401` | `Invalid token` | Missing or wrong Bearer token |
 | `409` | `Code already exists` | Duplicate on `POST /codes` |
 | `429` | `Rate limit exceeded` | Too many requests (see below) |
-
----
 
 ## Rate Limits
 
@@ -260,8 +242,6 @@ Exceeding the limit returns `429`:
 {"error": "Rate limit exceeded", "retry_after": 60}
 ```
 
----
-
 ## Source Sites
 
 | Game | Sources |
@@ -270,8 +250,6 @@ Exceeding the limit returns `429`:
 | NTE | GamesRadar, Game8, GameWith |
 | Blue Archive | GameRant, Dexerto, Eurogamer, Pocket Tactics |
 | Endfield | GamesRadar, Game8 |
-
----
 
 ## Self-Host
 
@@ -291,8 +269,6 @@ python run.py
 ```
 
 Requires Python 3.11+. No database — everything stored in `data.json`.
-
----
 
 ## FAQ
 
@@ -316,8 +292,6 @@ The deduplication merge and noise filter may reject some entries. Also, codes mu
 
 **No database?**  
 Correct. Everything is stored in `data.json` with atomic writes and automatic backup recovery. No Postgres, no SQLite.
-
----
 
 ## Notes
 
