@@ -49,6 +49,20 @@ async def health():
     return {"status": "ok"}
 
 
+@app.get("/stats")
+async def get_stats():
+    result = {}
+    for slug in Game.values():
+        codes = await db.redeemcode.find_many(
+            where={"game": slug, "status": CodeStatus.OK},
+        )
+        unverified = await db.redeemcode.find_many(
+            where={"game": slug, "status": CodeStatus.UNVERIFIED},
+        )
+        result[slug] = {"codes": len(codes), "unverified": len(unverified)}
+    return result
+
+
 @app.get("/games")
 async def list_games():
     return {

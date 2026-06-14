@@ -6,6 +6,13 @@
 [![Python](https://img.shields.io/badge/python-3.14-blue)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.136-009688)](https://fastapi.tiangolo.com)
 
+**Live code counts:**
+
+[![WuWa](https://img.shields.io/badge/dynamic/json?url=https://game-codes.onrender.com/stats&query=%24.wuwa.codes&label=WuWa&color=yellow)](https://game-codes.onrender.com/codes?game=wuwa)
+[![NTE](https://img.shields.io/badge/dynamic/json?url=https://game-codes.onrender.com/stats&query=%24.nte.codes&label=NTE&color=blue)](https://game-codes.onrender.com/codes?game=nte)
+[![Blue Archive](https://img.shields.io/badge/dynamic/json?url=https://game-codes.onrender.com/stats&query=%24.bluearchive.codes&label=Blue%20Archive&color=purple)](https://game-codes.onrender.com/codes?game=bluearchive)
+[![Endfield](https://img.shields.io/badge/dynamic/json?url=https://game-codes.onrender.com/stats&query=%24.endfield.codes&label=Endfield&color=red)](https://game-codes.onrender.com/codes?game=endfield)
+
 Auto-scrapes game redeem codes from news sites. Always up-to-date, refreshed hourly.
 
 **Endpoints:**
@@ -284,6 +291,31 @@ python run.py
 ```
 
 Requires Python 3.11+. No database — everything stored in `data.json`.
+
+---
+
+## FAQ
+
+**How often are codes updated?**  
+Scraping runs every hour via the built-in scheduler. Expired codes are automatically removed in the same pass.
+
+**Why are some codes in `unverified`?**  
+Codes start as `unverified` when first scraped. For games with web redemption (Blue Archive), the daily check tries to verify them against the game's API. Games without web redemption are immediately marked OK.
+
+**Can I add my own codes?**  
+Yes — `POST /codes` with a Bearer token. See the Auth endpoints section above.
+
+**Why isn't a code I found showing up?**  
+The scraper has a noise filter that blocks common words, duplicate halves (e.g. `NTEFUNGAMENTEFUNGAME`), product IDs (`504980102FKGOVNS`), and single words shorter than 4 characters. It only extracts uppercase alphanumeric patterns from tables, lists, and article text.
+
+**How long do codes stay active?**  
+As long as they appear on at least one source site. The hourly scrape checks all sources — any code no longer found anywhere gets expired to `NOT_OK`.
+
+**Why does the API return fewer codes than a source site lists?**  
+The deduplication merge and noise filter may reject some entries. Also, codes must appear in structured HTML (tables, lists, article bodies) — plain text buried in comments or scripts is skipped.
+
+**No database?**  
+Correct. Everything is stored in `data.json` with atomic writes and automatic backup recovery. No Postgres, no SQLite.
 
 ---
 
