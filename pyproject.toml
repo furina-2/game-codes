@@ -16,3 +16,6 @@ dependencies = [
 
 [tool.setuptools.packages.find]
 include = ["api*"]
+
+[tool.vercel]
+entrypoint = "api.app:app"

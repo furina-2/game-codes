@@ -10,6 +10,14 @@ from typing import Any
 
 from loguru import logger
 
+try:
+    from vercel.functions import RuntimeCache
+    _cache = RuntimeCache()
+    USE_CACHE = True
+except ImportError:
+    _cache = None
+    USE_CACHE = False
+
 SEED_FILE = Path("data.json")
 DATA_FILE = Path(os.getenv("DATA_FILE", "data.json"))
 BACKUP_FILE = DATA_FILE.with_name(DATA_FILE.name + ".bak")
@@ -43,6 +51,12 @@ class RedeemCodeStore:
         self._next_id = 1
 
     async def connect(self) -> None:
+        if USE_CACHE:
+            raw = _cache.get("game-codes:records")
+            if raw:
+                self._records = [Record(**r) for r in raw]
+                self._next_id = max((r.id for r in self._records), default=0) + 1
+                return
         self._migrate_from_sqlite()
         loaded = False
         if DATA_FILE.exists():
@@ -65,6 +79,8 @@ class RedeemCodeStore:
             except Exception as e:
                 logger.warning(f"Failed to load seed: {e}")
         self._restore_from_backup()
+        if USE_CACHE and self._records:
+            _cache.set("game-codes:records", [r.dict() for r in self._records], {"ttl": 86400})
 
     async def disconnect(self) -> None:
         pass
@@ -129,7 +145,10 @@ class RedeemCodeStore:
             BACKUP_FILE.unlink()
 
     def _save(self) -> None:
-        self._write_json([r.dict() for r in self._records])
+        data = [r.dict() for r in self._records]
+        if USE_CACHE:
+            _cache.set("game-codes:records", data, {"ttl": 86400})
+        self._write_json(data)
 
     def _matches(self, record: Record, where: dict[str, Any]) -> bool:
         for key, value in where.items():

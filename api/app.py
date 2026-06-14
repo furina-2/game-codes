@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from contextlib import asynccontextmanager
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -29,11 +30,12 @@ def verify_token(credentials: HTTPAuthorizationCredentials | None = Security(sec
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await db.connect()
-    scheduler.add_job(update_codes, "interval", hours=1, id="update")
-    scheduler.add_job(
-        check_codes, "cron", hour=1, minute=30, timezone="Asia/Taipei", id="check"
-    )
-    scheduler.start()
+    if not os.getenv("VERCEL"):
+        scheduler.add_job(update_codes, "interval", hours=1, id="update")
+        scheduler.add_job(
+            check_codes, "cron", hour=1, minute=30, timezone="Asia/Taipei", id="check"
+        )
+        scheduler.start()
     logger.info("Started scheduler")
     yield
     scheduler.shutdown()

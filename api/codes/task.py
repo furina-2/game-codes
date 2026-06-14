@@ -1,6 +1,11 @@
 from __future__ import annotations
 
+import os
+
+import httpx
 from loguru import logger
+
+from api.config import settings
 from api.constants import CodeStatus
 
 from api.core.registry import get_integration, list_games
@@ -65,6 +70,12 @@ async def update_codes() -> None:
                     f"Expired {entry.code} for {game}: "
                     f"no longer found on any source"
                 )
+
+        vercel_url = os.getenv("VERCEL_UPDATE_URL")
+        if vercel_url:
+            async with httpx.AsyncClient(timeout=10) as c:
+                await c.post(vercel_url, headers={"Authorization": f"Bearer {settings.api_token}"})
+                logger.info(f"Triggered Vercel update at {vercel_url}")
 
 
 async def check_codes() -> None:

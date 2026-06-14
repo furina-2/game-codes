@@ -23,8 +23,9 @@ Auto-scrapes game redeem codes from news sites. Always up-to-date, refreshed hou
 |---|---|
 | Render | `https://game-codes.onrender.com` |
 | WispByte | `https://game-codes.wisp.uno` |
+| Vercel | `https://game-codes.vercel.app` |
 
-> All examples below use the Render URL. Replace with the WispByte URL if preferred.
+> All examples below use the Render URL. Replace with any deployment URL as needed.
 
 ## Quick Start
 
@@ -221,6 +222,8 @@ The server runs these jobs automatically:
 |---|---|---|
 | `update-codes` | Every hour | Scrapes news sites for new codes, expires codes no longer found |
 | `check-codes` | Daily 1:30 AM (Asia/Taipei) | Re-verifies known codes against game redemption APIs |
+
+> **Vercel** skips the built-in scheduler (no background daemons). Use an external cron service (e.g. cron-job.org) or GitHub Actions to call `POST /update-codes` hourly, or rely on Render/WispByte to scrape and populate the shared data.
 
 ## Error Responses
 
