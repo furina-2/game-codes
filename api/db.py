@@ -52,11 +52,14 @@ class RedeemCodeStore:
 
     async def connect(self) -> None:
         if USE_CACHE:
-            raw = _cache.get("game-codes:records")
-            if raw:
-                self._records = [Record(**r) for r in raw]
-                self._next_id = max((r.id for r in self._records), default=0) + 1
-                return
+            try:
+                raw = _cache.get("game-codes:records")
+                if raw:
+                    self._records = [Record(**r) for r in raw]
+                    self._next_id = max((r.id for r in self._records), default=0) + 1
+                    return
+            except Exception:
+                logger.warning("RuntimeCache read failed, falling back to file")
         self._migrate_from_sqlite()
         loaded = False
         if DATA_FILE.exists():
@@ -80,7 +83,10 @@ class RedeemCodeStore:
                 logger.warning(f"Failed to load seed: {e}")
         self._restore_from_backup()
         if USE_CACHE and self._records:
-            _cache.set("game-codes:records", [r.dict() for r in self._records], {"ttl": 86400})
+            try:
+                _cache.set("game-codes:records", [r.dict() for r in self._records], {"ttl": 86400})
+            except Exception:
+                logger.warning("RuntimeCache seed write failed")
 
     async def disconnect(self) -> None:
         pass
@@ -147,7 +153,10 @@ class RedeemCodeStore:
     def _save(self) -> None:
         data = [r.dict() for r in self._records]
         if USE_CACHE:
-            _cache.set("game-codes:records", data, {"ttl": 86400})
+            try:
+                _cache.set("game-codes:records", data, {"ttl": 86400})
+            except Exception:
+                logger.warning("RuntimeCache write failed")
         self._write_json(data)
 
     def _matches(self, record: Record, where: dict[str, Any]) -> bool:
