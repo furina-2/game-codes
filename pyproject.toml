@@ -13,3 +13,6 @@ dependencies = [
     "pydantic-settings>=2.7",
     "loguru>=0.7",
 ]
+
+[tool.setuptools.packages.find]
+include = ["api*"]
