@@ -26,13 +26,18 @@ async def update_codes() -> None:
                         where={"id": existing.id},
                         data={"status": CodeStatus.OK},
                     )
+                if entry.get("rewards") and not existing.rewards:
+                    await db.redeemcode.update(
+                        where={"id": existing.id},
+                        data={"rewards": entry["rewards"]},
+                    )
                 continue
             status = await integration.check_code(entry["code"])
             await db.redeemcode.create(data={
                 "code": entry["code"],
                 "game": game,
                 "status": status,
-                "rewards": "",
+                "rewards": entry.get("rewards", ""),
                 "source": "scraper",
             })
             logger.info(f"Added code {entry['code']} for {game}")

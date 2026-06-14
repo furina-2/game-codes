@@ -14,7 +14,7 @@ async def scrape_game_codes(game_slug: str) -> list[dict]:
     if not integration:
         return []
 
-    async def fetch_source(source: str, url: str) -> list[str]:
+    async def fetch_source(source: str, url: str) -> list[dict]:
         try:
             async with httpx.AsyncClient(timeout=10) as client:
                 resp = await client.get(
@@ -28,9 +28,9 @@ async def scrape_game_codes(game_slug: str) -> list[dict]:
                 parser = get_parser(source)
                 if not parser:
                     return []
-                codes = parser(resp.text)
-                logger.info(f"Scraped {len(codes)} codes from {source} for {game_slug}")
-                return codes
+                parsed = parser(resp.text)
+                logger.info(f"Scraped {len(parsed)} codes from {source} for {game_slug}")
+                return parsed
         except asyncio.TimeoutError:
             logger.warning(f"Timeout scraping {source} for {game_slug}")
             return []
@@ -44,8 +44,12 @@ async def scrape_game_codes(game_slug: str) -> list[dict]:
     ]
     results = await asyncio.gather(*tasks)
 
-    all_codes: list[str] = []
-    for codes in results:
-        all_codes.extend(codes)
+    seen: dict[str, str] = {}
+    for entries in results:
+        for entry in entries:
+            code = entry["code"].upper()
+            rewards = entry.get("rewards", "")
+            if code not in seen or (rewards and not seen[code]):
+                seen[code] = rewards
 
-    return [{"code": c.upper(), "game": game_slug} for c in set(all_codes)]
+    return [{"code": c, "game": game_slug, "rewards": r} for c, r in seen.items()]

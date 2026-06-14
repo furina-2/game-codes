@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 
 from api.codes.sources import CodeSource
 
-ParserFunc = Callable[[str], list[str]]
+ParserFunc = Callable[[str], list[dict]]
 
 NOISE_WORDS: set[str] = {
     "ABOUT", "ACCESS", "ACCOUNT", "ARCHIVE", "ARTICLES", "ARTICLESTAGS",
@@ -103,17 +103,24 @@ def _find_code_patterns(text: str) -> list[str]:
     return found
 
 
-def _parse_tables(soup: BeautifulSoup) -> list[str]:
-    codes: list[str] = []
+def _parse_tables(soup: BeautifulSoup) -> list[dict]:
+    results: list[dict] = []
     for table in soup.find_all("table"):
         rows = table.find_all("tr")
         for row in rows:
             cells = row.find_all(["td", "th"])
-            for cell in cells:
-                text = cell.get_text(strip=True)
-                for code in _find_code_patterns(text):
-                    codes.append(code)
-    return codes
+            codes_in_row: list[str] = []
+            rewards_text = ""
+            for i, cell in enumerate(cells):
+                text = cell.get_text(" ", strip=True)
+                found = _find_code_patterns(text)
+                if found:
+                    codes_in_row.extend(found)
+                elif i > 0 and not rewards_text and len(text) > 3:
+                    rewards_text = text
+            for code in codes_in_row:
+                results.append({"code": code, "rewards": rewards_text})
+    return results
 
 
 def _parse_structured_elements(soup: BeautifulSoup) -> list[str]:
@@ -133,58 +140,62 @@ def _parse_full_text(soup: BeautifulSoup) -> list[str]:
     return codes
 
 
-def _parse_generic(html: str) -> list[str]:
+def _parse_generic(html: str) -> list[dict]:
     soup = BeautifulSoup(html, "lxml")
+    table_results = _parse_tables(soup)
+    table_codes: set[str] = {r["code"] for r in table_results}
+    rewards_map: dict[str, str] = {r["code"]: r["rewards"] for r in table_results if r["rewards"]}
     codes: list[str] = []
-    codes.extend(_parse_tables(soup))
     codes.extend(_parse_structured_elements(soup))
     codes.extend(_parse_full_text(soup))
     seen: set[str] = set()
-    unique: list[str] = []
+    results: list[dict] = []
+    seen.update(r["code"] for r in table_results)
+    results.extend(table_results)
     for c in codes:
         if c not in seen:
             seen.add(c)
-            unique.append(c)
-    return unique
+            results.append({"code": c, "rewards": rewards_map.get(c, "")})
+    return results
 
 
-def parse_gamesradar(html: str) -> list[str]:
+def parse_gamesradar(html: str) -> list[dict]:
     return _parse_generic(html)
 
 
-def parse_gamerant(html: str) -> list[str]:
+def parse_gamerant(html: str) -> list[dict]:
     return _parse_generic(html)
 
 
-def parse_game8(html: str) -> list[str]:
+def parse_game8(html: str) -> list[dict]:
     return _parse_generic(html)
 
 
-def parse_gamewith(html: str) -> list[str]:
+def parse_gamewith(html: str) -> list[dict]:
     return _parse_generic(html)
 
 
-def parse_dexerto(html: str) -> list[str]:
+def parse_dexerto(html: str) -> list[dict]:
     return _parse_generic(html)
 
 
-def parse_pcgamesn(html: str) -> list[str]:
+def parse_pcgamesn(html: str) -> list[dict]:
     return _parse_generic(html)
 
 
-def parse_vg247(html: str) -> list[str]:
+def parse_vg247(html: str) -> list[dict]:
     return _parse_generic(html)
 
 
-def parse_wutheringgg(html: str) -> list[str]:
+def parse_wutheringgg(html: str) -> list[dict]:
     return _parse_generic(html)
 
 
-def parse_eurogamer(html: str) -> list[str]:
+def parse_eurogamer(html: str) -> list[dict]:
     return _parse_generic(html)
 
 
-def parse_pockettactics(html: str) -> list[str]:
+def parse_pockettactics(html: str) -> list[dict]:
     return _parse_generic(html)
 
 
