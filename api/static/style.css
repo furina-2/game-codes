@@ -254,3 +254,60 @@ footer a:hover { color: #999; }
 }
 
 .error { color: #f87171; }
+
+/* ---- Docs Page ---- */
+.docs-page main { max-width: 800px; }
+
+.docs-section { margin-bottom: 40px; }
+.docs-section h2 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+.docs-section p { font-size: 14px; color: #999; line-height: 1.6; margin-bottom: 8px; }
+.docs-section p.note { color: #777; font-size: 13px; }
+
+.back-link { color: #6366f1; font-size: 14px; text-decoration: none; }
+.back-link:hover { text-decoration: underline; }
+
+.docs-table-wrap { overflow-x: auto; margin: 8px 0 16px; }
+.docs-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.docs-table th, .docs-table td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #222; }
+.docs-table th { color: #888; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+.docs-table td { color: #ccc; }
+.docs-table code { color: #fff; font-size: 13px; }
+.docs-table tr:last-child td { border-bottom: none; }
+
+.params-table-wrap { overflow-x: auto; margin: 8px 0 12px; }
+.params-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.params-table th, .params-table td { padding: 6px 10px; text-align: left; border-bottom: 1px solid #222; }
+.params-table th { color: #888; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+.params-table td { color: #bbb; }
+.params-table code { color: #fff; }
+.params-table tr:last-child td { border-bottom: none; }
+
+.endpoint { background: #16161e; border: 1px solid #222; border-radius: 10px; padding: 16px; margin-bottom: 12px; }
+.endpoint-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.endpoint-path { font-size: 16px; font-weight: 600; color: #fff; }
+.endpoint > p { margin-left: 0; }
+
+.method { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.method.get { background: #0d3a2e; color: #4ade80; }
+.method.post { background: #1a2a4a; color: #60a5fa; }
+.method.delete { background: #3a1515; color: #f87171; }
+
+.code-block { background: #0a0a0f; border: 1px solid #222; border-radius: 8px; padding: 12px; margin: 8px 0; position: relative; overflow-x: auto; }
+.code-block pre { margin: 0; }
+.code-block code { font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace; font-size: 13px; color: #e0e0e0; line-height: 1.5; white-space: pre; }
+
+.copy-btn-small { position: absolute; top: 6px; right: 6px; padding: 4px 10px; border-radius: 4px; border: 1px solid #333; background: #1c1c24; color: #888; font-size: 11px; cursor: pointer; transition: background 0.15s, color 0.15s; }
+.copy-btn-small:hover { background: #25252e; color: #fff; }
+
+.response-details { margin-top: 8px; }
+.response-details summary { cursor: pointer; font-size: 13px; font-weight: 600; color: #888; padding: 4px 0; }
+.response-details summary:hover { color: #ccc; }
+.response-details pre { background: #0a0a0f; border: 1px solid #222; border-radius: 8px; padding: 12px; margin-top: 8px; overflow-x: auto; }
+.response-details code { font-family: "SF Mono", "Fira Code", "Cascadia Code", monospace; font-size: 13px; color: #e0e0e0; line-height: 1.5; white-space: pre; }
+
+@media (max-width: 500px) {
+  .endpoint { padding: 12px; }
+  .endpoint-path { font-size: 14px; }
+  .code-block code { font-size: 12px; }
+  .docs-section h2 { font-size: 17px; }
+}

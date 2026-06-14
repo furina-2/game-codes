@@ -62,6 +62,11 @@ async def index():
     return FileResponse("api/static/index.html")
 
 
+@app.get("/api-docs", response_class=FileResponse)
+async def api_docs():
+    return FileResponse("api/static/api-docs.html")
+
+
 @app.get("/health")
 async def health():
     return {"status": "ok"}
