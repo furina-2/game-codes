@@ -18,7 +18,7 @@ except ImportError:
     _cache = None
     USE_CACHE = False
 
-SEED_FILE = Path("data.json")
+SEED_FILE = Path("seed.json")
 DATA_FILE = Path(os.getenv("DATA_FILE", "data.json"))
 BACKUP_FILE = DATA_FILE.with_name(DATA_FILE.name + ".bak")
 DB_FILE = Path(os.getenv("DB_FILE", "game-codes.db"))
