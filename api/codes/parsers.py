@@ -64,6 +64,9 @@ NOISE_WORDS: set[str] = {
     "PSM3", "PTCGP", "BDSP", "ST79", "C2000", "B100", "M1000",
     "INFERNO", "MANISH", "FIND",
     "POWER", "SCAMMERS", "BEWARE", "DOIR", "SOL3",
+    "MANY", "HAPPY", "CONVENES", "TIDES", "LUSTROUS",
+    "EVERFLOWING", "RESONATORS", "WITHYOU", "STAGE", "LATE",
+    "IINEW",
 }
 
 NOISE_PREFIXES: tuple[str, ...] = (
@@ -110,6 +113,8 @@ def _parse_tables(soup: BeautifulSoup) -> list[dict]:
         rows = table.find_all("tr")
         for row in rows:
             cells = row.find_all(["td", "th"])
+            if any("expir" in c.get_text(" ", strip=True).lower() for c in cells):
+                continue
             codes_in_row: list[str] = []
             rewards_text = ""
             for i, cell in enumerate(cells):
@@ -126,10 +131,17 @@ def _parse_tables(soup: BeautifulSoup) -> list[dict]:
 
 def _parse_structured_elements(soup: BeautifulSoup) -> list[str]:
     codes: list[str] = []
-    for tag in soup.find_all(["code", "strong", "b", "td", "th", "li"]):
+    for tag in soup.find_all(["code", "strong", "b", "li"]):
         text = tag.get_text(strip=True)
         if len(text) < 100:
-            codes.extend(_find_code_patterns(text))
+            if tag.name == "li":
+                heading = tag.find_previous(["h1", "h2", "h3", "h4"])
+                if heading and "expir" in heading.get_text(strip=True).lower():
+                    continue
+                found = [c for c in _find_code_patterns(text) if text != c]
+            else:
+                found = _find_code_patterns(text)
+            codes.extend(found)
     return codes
 
 
@@ -146,9 +158,7 @@ def _parse_generic(html: str) -> list[dict]:
     table_results = _parse_tables(soup)
     table_codes: set[str] = {r["code"] for r in table_results}
     rewards_map: dict[str, str] = {r["code"]: r["rewards"] for r in table_results if r["rewards"]}
-    codes: list[str] = []
-    codes.extend(_parse_structured_elements(soup))
-    codes.extend(_parse_full_text(soup))
+    codes: list[str] = _parse_structured_elements(soup)
     seen: set[str] = set()
     results: list[dict] = []
     seen.update(r["code"] for r in table_results)
