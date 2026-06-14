@@ -20,9 +20,9 @@ Auto-scrapes game redeem codes from news sites. Always up-to-date, refreshed hou
 **Endpoints:**
 
 | Platform | URL |
-|---|---|---|
+|---|---|
 | **WispByte** _(primary)_ | **`https://game-codes.wisp.uno`** |
-| Render | `https://game-codes.wisp.uno` |
+| Render | `https://game-codes.onrender.com` |
 | Vercel | `https://game-codes-psi.vercel.app` |
 
 > All examples below use the **WispByte** URL. Replace with any deployment URL as needed.
