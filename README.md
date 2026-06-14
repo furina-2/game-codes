@@ -23,7 +23,7 @@ Auto-scrapes game redeem codes from news sites. Always up-to-date, refreshed hou
 |---|---|
 | Render | `https://game-codes.onrender.com` |
 | WispByte | `https://game-codes.wisp.uno` |
-| Vercel | `https://game-codes.vercel.app` |
+| Vercel | `https://game-codes-psi.vercel.app` |
 
 > All examples below use the Render URL. Replace with any deployment URL as needed.
 
