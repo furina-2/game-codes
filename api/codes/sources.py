@@ -24,7 +24,6 @@ CODE_URLS: Final[dict[str, dict[CodeSource, str]]] = {
         CodeSource.GAMESRADAR: "https://www.gamesradar.com/games/rpg/wuthering-waves-codes-redeem/",
         CodeSource.GAMERANT: "https://gamerant.com/wuthering-waves-codes/",
         CodeSource.WUTHERINGGG: "https://wuthering.gg/codes",
-        CodeSource.VG247: "https://www.vg247.com/wuthering-waves-codes-redeem",
         CodeSource.PCGAMESN: "https://www.pcgamesn.com/wuthering-waves/codes",
     },
     Game.nte: {

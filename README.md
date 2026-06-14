@@ -248,7 +248,7 @@ Exceeding the limit returns `429`:
 
 | Game | Sources |
 |---|---|
-| WuWa | GamesRadar, GameRant, VG247, PCGamesN, wuthering.gg |
+| WuWa | GamesRadar, GameRant, PCGamesN, wuthering.gg |
 | NTE | GamesRadar, Game8, GameWith |
 | Blue Archive | GameRant, Dexerto, Eurogamer, Pocket Tactics |
 | Endfield | GamesRadar, Game8 |
