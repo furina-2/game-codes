@@ -130,8 +130,12 @@ def _parse_tables(soup: BeautifulSoup) -> list[dict]:
                 found = _find_code_patterns(text)
                 if found:
                     codes_in_row.extend(found)
-                elif i > 0 and not rewards_text and len(text) > 3:
+                elif i > 0 and not rewards_text and len(text) > 3 and not re.match(r'^\d{1,2}/\d{1,2}/\d{4}$', text):
                     rewards_text = text
+            if rewards_text and len(rewards_text) < 10:
+                longer = [c.get_text(" ", strip=True) for c in cells if len(c.get_text(" ", strip=True)) > len(rewards_text) and not re.match(r'^\d{1,2}/\d{1,2}/\d{4}$', c.get_text(" ", strip=True))]
+                if longer:
+                    rewards_text = max(longer, key=len)
             for code in codes_in_row:
                 if code not in seen_in_table:
                     seen_in_table.add(code)
