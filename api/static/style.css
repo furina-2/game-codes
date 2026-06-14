@@ -138,18 +138,11 @@ main {
 .dropdown-option:hover { background: #25252e; color: #fff; }
 .dropdown-option.selected { background: #25252e; color: #fff; font-weight: 600; }
 
-.logo-badge {
+.logo-img {
   width: 28px;
   height: 28px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  font-weight: 800;
-  color: #fff;
+  object-fit: contain;
   flex-shrink: 0;
-  letter-spacing: -0.5px;
 }
 
 .codes-grid {

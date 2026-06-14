@@ -1,7 +1,7 @@
 const GAMES = ["wuwa", "nte", "bluearchive", "endfield"];
 const GAME_LABELS = { wuwa: "Wuthering Waves", nte: "Neverness to Everness", bluearchive: "Blue Archive", endfield: "Arknights: Endfield" };
-const GAME_SHORT = { wuwa: "WW", nte: "NTE", bluearchive: "BA", endfield: "EF" };
-const GAME_LOGO_COLORS = { wuwa: "#eab308", nte: "#3b82f6", bluearchive: "#a855f7", endfield: "#ef4444" };
+const GAME_LOGOS = { wuwa: "wuwa.svg", nte: "nte.png", bluearchive: "bluearchive.svg", endfield: "endfield.svg" };
+const GAME_COLORS = { wuwa: "#eab308", nte: "#3b82f6", bluearchive: "#a855f7", endfield: "#ef4444" };
 
 let currentGame = "wuwa";
 
@@ -15,7 +15,7 @@ function updateStats(stats) {
   const row = document.getElementById("statsRow");
   row.innerHTML = GAMES.map(slug => {
     const g = stats[slug] || { codes: 0, unverified: 0 };
-    return `<span class="stat-badge" style="color:${GAME_LOGO_COLORS[slug]}">${GAME_LABELS[slug]}: ${g.codes} active</span>`;
+    return `<span class="stat-badge" style="color:${GAME_COLORS[slug]}">${GAME_LABELS[slug]}: ${g.codes} active</span>`;
   }).join("");
 }
 
@@ -71,13 +71,13 @@ function renderDropdown() {
   const menu = document.getElementById("dropdownMenu");
 
   function renderTrigger(slug) {
-    trigger.innerHTML = `<span class="logo-badge" style="background:${GAME_LOGO_COLORS[slug]}">${GAME_SHORT[slug]}</span>${GAME_LABELS[slug]}`;
+    trigger.innerHTML = `<img class="logo-img" src="/static/logos/${GAME_LOGOS[slug]}" alt="">${GAME_LABELS[slug]}`;
   }
 
   function renderOptions() {
     menu.innerHTML = GAMES.map(slug =>
       `<button class="dropdown-option${slug === currentGame ? " selected" : ""}" data-game="${slug}">
-        <span class="logo-badge" style="background:${GAME_LOGO_COLORS[slug]}">${GAME_SHORT[slug]}</span>
+        <img class="logo-img" src="/static/logos/${GAME_LOGOS[slug]}" alt="">
         ${GAME_LABELS[slug]}
       </button>`
     ).join("");
