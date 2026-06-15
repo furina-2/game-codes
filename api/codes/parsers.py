@@ -137,9 +137,11 @@ def parse_mobilematters(html: str) -> list[dict]:
         if _heading_has_expired(li):
             continue
         code, rewards = _find_li_content(li)
-        if code and _is_valid_code(code) and code not in seen and rewards:
-            seen.add(code)
-            results.append({"code": code, "rewards": rewards})
+        if not (code and _is_valid_code(code) and code not in seen and rewards):
+            continue
+        rewards = re.sub(r"\s*\(new!?\)\s*", "", rewards, flags=re.I).strip()
+        seen.add(code)
+        results.append({"code": code, "rewards": rewards})
     return results
 
 
