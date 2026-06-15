@@ -34,7 +34,7 @@ def _container(soup: BeautifulSoup, selector: str) -> Tag | BeautifulSoup:
 
 
 def _heading_has_expired(tag: Tag) -> bool:
-    heading = tag.find_previous(["h1", "h2", "h3", "h4"])
+    heading = tag.find_previous(["h1", "h2", "h3", "h4", "h5", "h6", "a"])
     return bool(heading and "expir" in heading.get_text(strip=True).lower())
 
 
