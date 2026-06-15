@@ -43,6 +43,7 @@ def _sanitize_code(raw: str) -> str:
     code = re.sub(r"\s*\(.*?\)", "", code)
     code = re.sub(r"\s*\[.*?\]", "", code)
     code = code.upper().strip()
+    code = re.sub(r"[^A-Z0-9_]+$", "", code)
     return code
 
 
