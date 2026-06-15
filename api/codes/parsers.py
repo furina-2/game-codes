@@ -21,6 +21,13 @@ SELECTORS: dict[CodeSource, str] = {
     CodeSource.POLYGON: ".article-body",
 }
 
+_VALID_CODE = re.compile(r"^[A-Z0-9_]{4,}$")
+
+
+def _is_valid_code(s: str) -> bool:
+    return bool(_VALID_CODE.match(s))
+
+
 def _container(soup: BeautifulSoup, selector: str) -> Tag | BeautifulSoup:
     el = soup.select_one(selector)
     return el if el else soup
@@ -68,7 +75,7 @@ def parse_gamesradar(html: str) -> list[dict]:
         if _heading_has_expired(li):
             continue
         code, rewards = _find_li_content(li)
-        if code and code not in seen:
+        if code and _is_valid_code(code) and code not in seen:
             seen.add(code)
             results.append({"code": code, "rewards": rewards})
     return results
@@ -83,7 +90,7 @@ def parse_polygon(html: str) -> list[dict]:
         if _heading_has_expired(li):
             continue
         code, rewards = _find_li_content(li)
-        if code and code not in seen:
+        if code and _is_valid_code(code) and code not in seen:
             seen.add(code)
             results.append({"code": code, "rewards": rewards})
     return results
@@ -102,7 +109,7 @@ def parse_eurogamer(html: str) -> list[dict]:
             continue
         parts = text.split(":", 1)
         code = parts[0].strip().split("/")[0].strip()
-        if not code.isupper() or len(code) < 4:
+        if not _is_valid_code(code):
             continue
         rewards = parts[1].strip()
         if code not in seen:
@@ -120,7 +127,7 @@ def parse_pockettactics(html: str) -> list[dict]:
         if _heading_has_expired(li):
             continue
         code, rewards = _find_li_content(li)
-        if code and code not in seen:
+        if code and _is_valid_code(code) and code not in seen:
             seen.add(code)
             results.append({"code": code, "rewards": rewards or ""})
     return results
@@ -140,12 +147,18 @@ def parse_game8(html: str) -> list[dict]:
             if len(cells) < 2:
                 continue
             code_div = cells[0].find("div", class_="a-clipboard__container")
-            if not code_div:
+            if code_div:
+                code = code_div.get_text(strip=True)
+            else:
+                code = cells[0].get_text(strip=True)
+            if not _is_valid_code(code):
                 continue
-            code = code_div.get_text(strip=True)
             reward_divs = cells[1].find_all("div", class_="align")
-            rewards = " ".join(d.get_text(strip=True) for d in reward_divs)
-            if code and code not in seen:
+            if reward_divs:
+                rewards = " ".join(d.get_text(strip=True) for d in reward_divs)
+            else:
+                rewards = cells[1].get_text(" ", strip=True)
+            if code not in seen:
                 seen.add(code)
                 results.append({"code": code, "rewards": rewards})
     return results
@@ -157,6 +170,11 @@ def parse_gamewith(html: str) -> list[dict]:
     results: list[dict] = []
     seen: set[str] = set()
     for table in container.find_all("table"):
+        thead = table.find("th")
+        if not thead:
+            continue
+        if "code" not in thead.get_text(strip=True).lower():
+            continue
         if _heading_has_expired(table):
             continue
         rows = table.find_all("tr")
@@ -164,9 +182,15 @@ def parse_gamewith(html: str) -> list[dict]:
             cells = row.find_all("td")
             if len(cells) < 2:
                 continue
-            code = cells[0].get_text(strip=True)
+            raw = cells[0].get_text(strip=True)
+            if not raw or not _is_valid_code(raw):
+                continue
+            code = raw
+            half = len(code) // 2
+            if len(code) >= 8 and len(code) % 2 == 0 and code[:half] == code[half:]:
+                code = code[:half]
             rewards = cells[1].get_text(strip=True)
-            if code and len(code) >= 4 and code not in seen:
+            if code not in seen:
                 seen.add(code)
                 results.append({"code": code, "rewards": rewards})
     return results
@@ -184,7 +208,7 @@ def parse_pcgamesn(html: str) -> list[dict]:
         for match in re.finditer(r"\b([A-Z0-9_]{4,})\s*[-–]\s*(.+)", text):
             code = _sanitize_code(match.group(1))
             rewards = match.group(2).strip()
-            if code and code not in seen:
+            if code and _is_valid_code(code) and code not in seen:
                 seen.add(code)
                 results.append({"code": code, "rewards": rewards})
     return results
@@ -204,7 +228,7 @@ def parse_wutheringgg(html: str) -> list[dict]:
         code = cells[0].get_text(strip=True)
         reward_td = cells[2]
         rewards = reward_td.get_text(" ", strip=True)
-        if code and code not in seen:
+        if code and _is_valid_code(code) and code not in seen:
             seen.add(code)
             results.append({"code": code, "rewards": rewards})
     return results
@@ -216,10 +240,12 @@ def parse_dexerto(html: str) -> list[dict]:
     results: list[dict] = []
     seen: set[str] = set()
     for strong in container.find_all(["strong", "b"]):
-        text = strong.get_text(strip=True)
-        if not text.isupper() or len(text) < 4:
+        if _heading_has_expired(strong):
             continue
+        text = strong.get_text(strip=True)
         code = text.split("/")[0].strip()
+        if not _is_valid_code(code):
+            continue
         parent = strong.parent
         rewards = ""
         if parent:
