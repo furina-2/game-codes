@@ -32,7 +32,6 @@ CODE_URLS: Final[dict[str, dict[CodeSource, str]]] = {
         CodeSource.POLYGON: "https://www.polygon.com/neverness-to-everness-codes-list-redeem-how-to/",
     },
     Game.bluearchive: {
-        CodeSource.DEXERTO: "https://www.dexerto.com/codes/blue-archive-codes-3311458/",
         CodeSource.EUROGAMER: "https://www.eurogamer.net/blue-archive-codes",
     },
     Game.endfield: {
