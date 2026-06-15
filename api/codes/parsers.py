@@ -3,303 +3,244 @@ from __future__ import annotations
 import re
 from typing import Callable
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 
 from api.codes.sources import CodeSource
 
 ParserFunc = Callable[[str], list[dict]]
 
-NOISE_WORDS: set[str] = {
-    "ABOUT", "ACCESS", "ACCOUNT", "ARCHIVE", "ARTICLES", "ARTICLESTAGS",
-    "BACK", "CATEGORIES", "COMMUNITY", "CONTACT", "CONTENT", "COOKIE",
-    "COPYRIGHT", "DETAILS", "EMAIL", "ERROR", "EVENT", "FAQ", "FIND",
-    "FOOTER", "GUIDE", "HEADER", "HELP", "HOME", "IMAGE", "INDEX",
-    "INTERVIEW", "JOIN", "LANGUAGE", "LATEST", "LEARN", "LINK", "LINKS",
-    "LOAD", "LOGIN", "LOGOUT", "MAGAZINE", "MAIL", "MEDIA", "MENU",
-    "META", "MOBILE", "MORE", "NAV", "NAVIGATION", "NEWS", "NEXT",
-    "NONE", "NOTE", "NOTES", "OFF", "ON", "OPEN", "OTHER", "PAGE",
-    "PAGES", "PHOTO", "POPULAR", "POST", "POSTS", "PREV", "PREVIOUS",
-    "PRICE", "PRIVACY", "PROFILE", "PUBLIC", "QUICK", "RANDOM",
-    "READ", "RECENT", "REGISTER", "RELATED", "REPLY", "REPORT",
-    "SAVE", "SCREEN", "SEARCH", "SECURITY", "SHARE", "SHOP", "SIGN",
-    "SITEMAP", "SKIP", "SOCIAL", "STORY", "SUBMIT", "SUPPORT",
-    "TAGS", "TERMS", "TITLE", "TOP", "TOPICS", "TUTORIAL", "TWITTER",
-    "UPDATE", "UPLOAD", "URL", "USER", "VIDEO", "VIEW", "WEB",
-    "WEBSITE", "WELCOME", "WIDGET", "WIKI", "WRITE", "YOUTUBE",
-    "CODE", "CODES", "REWARDS", "REDEEM", "EXPIRED", "ACTIVE",
-    "GIFT", "FREE", "BONUS", "REWARD", "PROMO", "COUPON",
-    "LOAD", "MORE", "LESS", "SHOW", "HIDE",
-    "COPY", "SHARE", "TWEET", "FACEBOOK", "REDDIT", "DISCORD",
-    "GAMING", "POPULAR", "VIEW", "ALL", "GAMES", "TRENDING",
-    "NEW", "PC", "PS5", "XBOX", "NINTENDO", "MOBILE", "ANDROID", "IOS",
-    "LOG", "SIGN", "IN", "UP", "OUT", "MY", "YOUR", "OUR", "THEIR",
-    "THIS", "THAT", "WITH", "FROM", "HAVE", "BEEN", "BEING",
-    "FIRST", "LAST", "NEXT", "PREV", "MENU", "NAV",
-    "CLICK", "ENTER", "TYPE", "INPUT", "FIELD", "FORM", "BUTTON",
-    "CANCEL", "CLOSE", "DONE", "EDIT", "DELETE", "REMOVE", "ADD",
-    "CREATE", "UPDATE", "MANAGE", "SETTINGS", "OPTIONS", "CONFIG",
-    "ACCOUNT", "PROFILE", "PASSWORD", "EMAIL", "PHONE", "NUMBER",
-    "ADDRESS", "CITY", "STATE", "COUNTRY", "ZIP", "CODE",
-    "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY",
-    "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY",
-    "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER",
-    "SPRING", "SUMMER", "AUTUMN", "WINTER",
-    "ANNIVERSARY", "BIRTHDAY", "CELEBRATION", "FESTIVAL", "EVENT",
-    "DAILY", "WEEKLY", "MONTHLY", "YEARLY", "SPECIAL", "LIMITED",
-    "GUEST", "MEMBER", "PREMIUM", "BASIC", "STANDARD", "PRO",
-    "ADMIN", "MOD", "OWNER", "CREATOR", "EDITOR", "AUTHOR",
-    "STARS", "RATING", "SCORE", "LEVEL", "RANK", "TIER",
-    "POLL", "SURVEY", "VOTE", "RESULT",
-    "ANSWER", "QUESTION", "SOLUTION", "TIP", "TRICK", "GUIDE",
-    "INFO", "INFORMATION", "DATA", "TABLE", "LIST", "ITEM",
-    "CHECK", "VERIFY", "CONFIRM", "SUCCESS", "FAIL", "ERROR",
-    "WARNING", "NOTICE", "ALERT", "MESSAGE", "NOTIFICATION",
-    "STREAM", "LIVE", "VIDEO", "AUDIO", "MEDIA", "IMAGE", "PHOTO",
-    "GALLERY", "ALBUM", "COLLECTION", "SET",
-    "SOURCE", "SITES", "SITE", "PAGE", "DOC", "DOCS", "DOCUMENT",
-    "FILE", "FILES", "FOLDER", "DIRECTORY", "PATH",
-    "SERVER", "CLIENT", "HOST", "LOCAL", "REMOTE", "GLOBAL",
-    "ENGLISH", "SPANISH", "FRENCH", "GERMAN", "JAPANESE", "KOREAN",
-    "CHINESE", "RUSSIAN", "ARABIC", "HINDI",
-    "PSM3", "PTCGP", "BDSP", "ST79", "C2000", "B100", "M1000",
-    "INFERNO", "MANISH", "FIND",
-    "POWER", "SCAMMERS", "BEWARE", "DOIR", "SOL3",
-    "MANY", "HAPPY", "CONVENES", "TIDES", "LUSTROUS",
-    "EVERFLOWING", "RESONATORS", "WITHYOU", "STAGE", "LATE",
-    "IINEW", "INSP", "NTEHAVEFUN", "UTDX",
-    "DREAMWALK0603", "TOMATO100", "RACENOLIMIT",
-    "THESKYOFUNITY0526",
-    "MIDNIGHTSNACKYUUKA", "HIDENSEEKKOYUKI", "PILLOWFIGHTNOA",
-    "RUNEREADER", "RABBITHOLE",
-    "NTE0429", "NTEVTUBER200",
+SELECTORS: dict[CodeSource, str] = {
+    CodeSource.GAMESRADAR: ".article-body",
+    CodeSource.GAME8: ".archive-style-wrapper",
+    CodeSource.GAMEWITH: ".article-wrap",
+    CodeSource.DEXERTO: "article",
+    CodeSource.PCGAMESN: ".entry-content",
+    CodeSource.WUTHERINGGG: ".codes-table",
+    CodeSource.EUROGAMER: ".article_body_content",
+    CodeSource.POCKETTACTICS: ".entry-content",
+    CodeSource.POLYGON: ".article-body",
 }
 
-NOISE_PREFIXES: tuple[str, ...] = (
-    "BTN_", "LBL_", "TXT_", "MSG_", "ERR_", "WARN_",
-    "NAV_", "MENU_", "FOOTER_", "HEADER_",
-    "PLACEHOLDER_", "DEFAULT_",
-)
+def _container(soup: BeautifulSoup, selector: str) -> Tag | BeautifulSoup:
+    el = soup.select_one(selector)
+    return el if el else soup
 
 
-REWARD_NOISE_WORDS: set[str] = {
-    "release", "date", "time", "title", "description", "summary",
-    "details", "information", "content", "article", "page", "section",
-    "update", "announcement", "announce", "status", "note", "notes",
-    "version", "patch", "hotfix", "maintenance",
-    "schedule", "scheduled", "coming", "soon", "later",
-    "click", "here", "link", "read", "more",
-    "related", "other", "various", "multiple", "select",
-    "and", "the", "a", "an", "of", "in", "on", "at", "to", "for",
-    "with", "from", "by", "is", "are", "was", "were", "be", "been",
-    "no", "not", "or", "but", "if", "as", "has", "had", "have",
-    "its", "it", "their", "they", "this", "that", "these", "those",
-    "all", "any", "each", "every", "some", "many", "much",
-    "total", "subtotal", "amount", "quantity", "number",
-    "item", "items", "type", "types", "category", "categories",
-    "already", "now", "available", "new", "currently",
-}
+def _heading_has_expired(tag: Tag) -> bool:
+    heading = tag.find_previous(["h1", "h2", "h3", "h4"])
+    return bool(heading and "expir" in heading.get_text(strip=True).lower())
 
 
-def _is_reward_noise(reward: str, code: str) -> bool:
-    if not reward:
-        return False
-    text = reward
-    text = text.replace(code, "").strip()
-    text = re.sub(r'\b[A-Z][A-Z0-9_]{3,}\b', '', text).strip()
-    text = text.lower()
-    text = re.sub(r'[\s\-:,;.()\[\]!?\'\"]+', ' ', text).strip()
-    if not text:
-        return True
-    words = text.split()
-    if len(words) <= 5:
-        non_noise = [
-            w for w in words
-            if w not in REWARD_NOISE_WORDS
-            and not re.match(r'^\d+[xX]?$', w)
-        ]
-        if not non_noise:
-            return True
-    return False
+def _sanitize_code(raw: str) -> str:
+    code = raw.strip().split("/")[0].strip()
+    code = re.sub(r"\s*\(.*?\)", "", code)
+    code = re.sub(r"\s*\[.*?\]", "", code)
+    code = code.upper().strip()
+    return code
 
 
-def _is_noise(code: str) -> bool:
-    if code in NOISE_WORDS:
-        return True
-    if code.startswith(NOISE_PREFIXES):
-        return True
-    if re.match(r'^[A-Z][a-z]{2,}$', code):
-        return True
-    if re.match(r'^[A-Z]{2,3}\d{2,}$', code):
-        return True
-    if re.match(r'^\d{5,}', code):
-        return True
-    half = len(code) // 2
-    if len(code) >= 8 and len(code) % 2 == 0 and code[:half] == code[half:]:
-        return True
-    return False
-
-
-def _find_code_patterns(text: str) -> list[str]:
-    found: list[str] = []
-    for match in re.finditer(r'\b([A-Z0-9_]{4,})\b', text):
-        code = match.group(1)
-        if not re.match(r'^[A-Z0-9_]+$', code):
-            continue
-        if re.match(r'^\d{4,}$', code):
-            continue
-        if _is_noise(code):
-            continue
-        found.append(code)
-    return found
-
-
-def _parse_tables(soup: BeautifulSoup) -> list[dict]:
-    results: list[dict] = []
-    for table in soup.find_all("table"):
-        table_heading = table.find_previous(["h1", "h2", "h3", "h4"])
-        if table_heading and "expir" in table_heading.get_text(strip=True).lower():
-            continue
-        rows = table.find_all("tr")
-        seen_in_table: set[str] = set()
-        for row in rows:
-            cells = row.find_all(["td", "th"])
-            if any("expir" in c.get_text(" ", strip=True).lower() for c in cells):
-                continue
-            codes_in_row: list[str] = []
-            rewards_text = ""
-            for i, cell in enumerate(cells):
-                text = cell.get_text(" ", strip=True)
-                found = _find_code_patterns(text)
-                if found:
-                    codes_in_row.extend(found)
-                elif i > 0 and not rewards_text and len(text) > 3 and not re.match(r'^\d{1,2}/\d{1,2}/\d{4}$', text):
-                    rewards_text = text
-            if rewards_text and len(rewards_text) < 10:
-                longer = [c.get_text(" ", strip=True) for c in cells if len(c.get_text(" ", strip=True)) > len(rewards_text) and not re.match(r'^\d{1,2}/\d{1,2}/\d{4}$', c.get_text(" ", strip=True))]
-                if longer:
-                    rewards_text = max(longer, key=len)
-            for code in codes_in_row:
-                if code not in seen_in_table:
-                    seen_in_table.add(code)
-                    results.append({"code": code, "rewards": rewards_text})
-    return results
-
-
-def _extract_rewards(text: str, code: str) -> str:
-    lower_text = text.lower()
-    lower_code = code.lower()
-    idx = lower_text.find(lower_code)
-    if idx == -1:
-        return ""
-    after = text[idx + len(code):].strip()
-    after = re.sub(r'^[\s:–\-|,;.]+', '', after).strip()
-    after = re.sub(r'(?:latest|new)!?\s*$', '', after, flags=re.I).strip()
-    after = re.sub(r'(?<=\S)\(', ' (', after)
-    after = re.sub(r'\)(?=\S)', ') ', after)
-    after = re.sub(r'\[', ' [', after)
-    after = re.sub(r'\s+', ' ', after)
-    after = after.strip().rstrip(':;,.-– ').strip()
-    return after
-
-
-def _parse_structured_elements(soup: BeautifulSoup) -> list[dict]:
-    results: list[dict] = []
-    for tag in soup.find_all(["code", "strong", "b", "li"]):
-        if tag.name != "li" and tag.find_parent("li"):
-            continue
-        text = tag.get_text(strip=True)
-        if len(text) < 300:
-            heading = tag.find_previous(["h1", "h2", "h3", "h4"])
-            if heading and "expir" in heading.get_text(strip=True).lower():
-                continue
-            if tag.name == "li":
-                found = [c for c in _find_code_patterns(text) if text != c]
-            else:
-                found = _find_code_patterns(text)
-            for c in found:
-                rewards = _extract_rewards(text, c) if tag.name == "li" else ""
-                results.append({"code": c, "rewards": rewards})
-    return results
-
-
-def _parse_full_text(soup: BeautifulSoup) -> list[str]:
-    codes: list[str] = []
-    for div in soup.find_all(["article", "div", "section", "main"]):
-        text = div.get_text(separator=" ", strip=True)
-        codes.extend(_find_code_patterns(text))
-    return codes
-
-
-def _parse_generic(html: str) -> list[dict]:
-    soup = BeautifulSoup(html, "lxml")
-    table_results = _parse_tables(soup)
-    rewards_map: dict[str, str] = {r["code"]: r["rewards"] for r in table_results if r["rewards"]}
-    structured: list[dict] = _parse_structured_elements(soup)
-    seen: set[str] = set()
-    results: list[dict] = []
-    seen.update(r["code"] for r in table_results)
-    results.extend(table_results)
-    for entry in structured:
-        c = entry["code"]
-        if c not in seen:
-            seen.add(c)
-            rewards = entry["rewards"] or rewards_map.get(c, "")
-            results.append({"code": c, "rewards": rewards})
-    return [r for r in results if not _is_reward_noise(r["rewards"], r["code"])]
+def _find_li_content(li: Tag) -> tuple[str, str]:
+    strong = li.find("strong")
+    if not strong:
+        return "", ""
+    code = _sanitize_code(strong.get_text(strip=True))
+    if not code or len(code) < 4:
+        return "", ""
+    li_text = li.get_text(" ", strip=True)
+    strong_text = strong.get_text(strip=True)
+    if li_text.startswith(strong_text):
+        after = li_text[len(strong_text):]
+    else:
+        idx = li_text.find(code)
+        if idx == -1:
+            return code, ""
+        after = li_text[idx + len(code):]
+    after = re.sub(r"^[\s:–\-|,;.]+", "", after).strip()
+    return code, after
 
 
 def parse_gamesradar(html: str) -> list[dict]:
-    return _parse_generic(html)
-
-
-def parse_gamerant(html: str) -> list[dict]:
-    return _parse_generic(html)
-
-
-def parse_game8(html: str) -> list[dict]:
-    return _parse_generic(html)
-
-
-def parse_gamewith(html: str) -> list[dict]:
-    return _parse_generic(html)
-
-
-def parse_dexerto(html: str) -> list[dict]:
-    return _parse_generic(html)
-
-
-def parse_pcgamesn(html: str) -> list[dict]:
-    return _parse_generic(html)
-
-
-def parse_vg247(html: str) -> list[dict]:
-    return _parse_generic(html)
-
-
-def parse_wutheringgg(html: str) -> list[dict]:
-    return _parse_generic(html)
-
-
-def parse_eurogamer(html: str) -> list[dict]:
-    return _parse_generic(html)
-
-
-def parse_pockettactics(html: str) -> list[dict]:
-    return _parse_generic(html)
+    soup = BeautifulSoup(html, "lxml")
+    container = _container(soup, SELECTORS[CodeSource.GAMESRADAR])
+    results: list[dict] = []
+    seen: set[str] = set()
+    for li in container.find_all("li"):
+        if _heading_has_expired(li):
+            continue
+        code, rewards = _find_li_content(li)
+        if code and code not in seen:
+            seen.add(code)
+            results.append({"code": code, "rewards": rewards})
+    return results
 
 
 def parse_polygon(html: str) -> list[dict]:
-    return _parse_generic(html)
+    soup = BeautifulSoup(html, "lxml")
+    container = _container(soup, SELECTORS[CodeSource.POLYGON])
+    results: list[dict] = []
+    seen: set[str] = set()
+    for li in container.find_all("li"):
+        if _heading_has_expired(li):
+            continue
+        code, rewards = _find_li_content(li)
+        if code and code not in seen:
+            seen.add(code)
+            results.append({"code": code, "rewards": rewards})
+    return results
+
+
+def parse_eurogamer(html: str) -> list[dict]:
+    soup = BeautifulSoup(html, "lxml")
+    container = _container(soup, SELECTORS[CodeSource.EUROGAMER])
+    results: list[dict] = []
+    seen: set[str] = set()
+    for li in container.find_all("li"):
+        if _heading_has_expired(li):
+            continue
+        text = li.get_text(" ", strip=True)
+        if ":" not in text or len(text) > 200:
+            continue
+        parts = text.split(":", 1)
+        code = parts[0].strip().split("/")[0].strip()
+        if not code.isupper() or len(code) < 4:
+            continue
+        rewards = parts[1].strip()
+        if code not in seen:
+            seen.add(code)
+            results.append({"code": code, "rewards": rewards})
+    return results
+
+
+def parse_pockettactics(html: str) -> list[dict]:
+    soup = BeautifulSoup(html, "lxml")
+    container = _container(soup, SELECTORS[CodeSource.POCKETTACTICS])
+    results: list[dict] = []
+    seen: set[str] = set()
+    for li in container.find_all("li"):
+        if _heading_has_expired(li):
+            continue
+        code, rewards = _find_li_content(li)
+        if code and code not in seen:
+            seen.add(code)
+            results.append({"code": code, "rewards": rewards or ""})
+    return results
+
+
+def parse_game8(html: str) -> list[dict]:
+    soup = BeautifulSoup(html, "lxml")
+    container = _container(soup, SELECTORS[CodeSource.GAME8])
+    results: list[dict] = []
+    seen: set[str] = set()
+    for table in container.find_all("table", class_="a-table"):
+        if _heading_has_expired(table):
+            continue
+        rows = table.find_all("tr")
+        for row in rows[1:]:
+            cells = row.find_all("td")
+            if len(cells) < 2:
+                continue
+            code_div = cells[0].find("div", class_="a-clipboard__container")
+            if not code_div:
+                continue
+            code = code_div.get_text(strip=True)
+            reward_divs = cells[1].find_all("div", class_="align")
+            rewards = " ".join(d.get_text(strip=True) for d in reward_divs)
+            if code and code not in seen:
+                seen.add(code)
+                results.append({"code": code, "rewards": rewards})
+    return results
+
+
+def parse_gamewith(html: str) -> list[dict]:
+    soup = BeautifulSoup(html, "lxml")
+    container = _container(soup, SELECTORS[CodeSource.GAMEWITH])
+    results: list[dict] = []
+    seen: set[str] = set()
+    for table in container.find_all("table"):
+        if _heading_has_expired(table):
+            continue
+        rows = table.find_all("tr")
+        for row in rows[1:]:
+            cells = row.find_all("td")
+            if len(cells) < 2:
+                continue
+            code = cells[0].get_text(strip=True)
+            rewards = cells[1].get_text(strip=True)
+            if code and len(code) >= 4 and code not in seen:
+                seen.add(code)
+                results.append({"code": code, "rewards": rewards})
+    return results
+
+
+def parse_pcgamesn(html: str) -> list[dict]:
+    soup = BeautifulSoup(html, "lxml")
+    container = _container(soup, SELECTORS[CodeSource.PCGAMESN])
+    results: list[dict] = []
+    seen: set[str] = set()
+    for p in container.find_all("p"):
+        text = p.get_text(" ", strip=True)
+        if "expir" in text.lower():
+            continue
+        for match in re.finditer(r"\b([A-Z0-9_]{4,})\s*[-–]\s*(.+)", text):
+            code = _sanitize_code(match.group(1))
+            rewards = match.group(2).strip()
+            if code and code not in seen:
+                seen.add(code)
+                results.append({"code": code, "rewards": rewards})
+    return results
+
+
+def parse_wutheringgg(html: str) -> list[dict]:
+    soup = BeautifulSoup(html, "lxml")
+    table = soup.select_one(SELECTORS[CodeSource.WUTHERINGGG])
+    if not table:
+        return []
+    results: list[dict] = []
+    seen: set[str] = set()
+    for row in table.find_all("tr", class_="active"):
+        cells = row.find_all("td")
+        if len(cells) < 3:
+            continue
+        code = cells[0].get_text(strip=True)
+        reward_td = cells[2]
+        rewards = reward_td.get_text(" ", strip=True)
+        if code and code not in seen:
+            seen.add(code)
+            results.append({"code": code, "rewards": rewards})
+    return results
+
+
+def parse_dexerto(html: str) -> list[dict]:
+    soup = BeautifulSoup(html, "lxml")
+    container = _container(soup, SELECTORS[CodeSource.DEXERTO])
+    results: list[dict] = []
+    seen: set[str] = set()
+    for strong in container.find_all(["strong", "b"]):
+        text = strong.get_text(strip=True)
+        if not text.isupper() or len(text) < 4:
+            continue
+        code = text.split("/")[0].strip()
+        parent = strong.parent
+        rewards = ""
+        if parent:
+            parent_text = parent.get_text(" ", strip=True)
+            m = re.search(
+                r"\b" + re.escape(code) + r"\b\s*[-–:]\s*(.*)", parent_text
+            )
+            if m:
+                rewards = m.group(1).strip()
+        if code not in seen:
+            seen.add(code)
+            results.append({"code": code, "rewards": rewards})
+    return results
 
 
 _PARSERS: dict[CodeSource, ParserFunc] = {
     CodeSource.GAMESRADAR: parse_gamesradar,
-    CodeSource.GAMERANT: parse_gamerant,
     CodeSource.GAME8: parse_game8,
     CodeSource.GAMEWITH: parse_gamewith,
     CodeSource.DEXERTO: parse_dexerto,
     CodeSource.PCGAMESN: parse_pcgamesn,
-    CodeSource.VG247: parse_vg247,
     CodeSource.WUTHERINGGG: parse_wutheringgg,
     CodeSource.EUROGAMER: parse_eurogamer,
     CodeSource.POCKETTACTICS: parse_pockettactics,
@@ -307,5 +248,8 @@ _PARSERS: dict[CodeSource, ParserFunc] = {
 }
 
 
-def get_parser(source: CodeSource) -> ParserFunc | None:
-    return _PARSERS.get(source)
+def get_parser(source: str) -> ParserFunc | None:
+    try:
+        return _PARSERS.get(CodeSource(source))
+    except ValueError:
+        return None

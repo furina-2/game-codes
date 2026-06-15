@@ -8,7 +8,6 @@ from api.constants import Game
 
 class CodeSource(StrEnum):
     GAMESRADAR = "gamesradar"
-    GAMERANT = "gamerant"
     GAME8 = "game8"
     GAMEWITH = "gamewith"
     DEXERTO = "dexerto"
@@ -23,7 +22,6 @@ class CodeSource(StrEnum):
 CODE_URLS: Final[dict[str, dict[CodeSource, str]]] = {
     Game.wuwa: {
         CodeSource.GAMESRADAR: "https://www.gamesradar.com/games/rpg/wuthering-waves-codes-redeem/",
-        CodeSource.GAMERANT: "https://gamerant.com/wuthering-waves-codes/",
         CodeSource.WUTHERINGGG: "https://wuthering.gg/codes",
         CodeSource.PCGAMESN: "https://www.pcgamesn.com/wuthering-waves/codes",
     },
