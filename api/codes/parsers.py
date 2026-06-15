@@ -14,6 +14,7 @@ SELECTORS: dict[CodeSource, str] = {
     CodeSource.GAME8: ".archive-style-wrapper",
     CodeSource.GAMEWITH: ".article-wrap",
     CodeSource.DEXERTO: "article",
+    CodeSource.MOBILEMATTERS: "article",
     CodeSource.PCGAMESN: ".entry-content",
     CodeSource.WUTHERINGGG: ".codes-table",
     CodeSource.EUROGAMER: ".article_body_content",
@@ -48,7 +49,7 @@ def _sanitize_code(raw: str) -> str:
 
 
 def _find_li_content(li: Tag) -> tuple[str, str]:
-    strong = li.find("strong")
+    strong = li.find(["strong", "b"])
     if not strong:
         return "", ""
     code = _sanitize_code(strong.get_text(strip=True))
@@ -122,6 +123,21 @@ def parse_eurogamer(html: str) -> list[dict]:
             continue
         rewards = parts[1].strip()
         if code not in seen:
+            seen.add(code)
+            results.append({"code": code, "rewards": rewards})
+    return results
+
+
+def parse_mobilematters(html: str) -> list[dict]:
+    soup = BeautifulSoup(html, "lxml")
+    container = _container(soup, SELECTORS[CodeSource.MOBILEMATTERS])
+    results: list[dict] = []
+    seen: set[str] = set()
+    for li in container.find_all("li"):
+        if _heading_has_expired(li):
+            continue
+        code, rewards = _find_li_content(li)
+        if code and _is_valid_code(code) and code not in seen and rewards:
             seen.add(code)
             results.append({"code": code, "rewards": rewards})
     return results
@@ -278,6 +294,7 @@ _PARSERS: dict[CodeSource, ParserFunc] = {
     CodeSource.PCGAMESN: parse_pcgamesn,
     CodeSource.WUTHERINGGG: parse_wutheringgg,
     CodeSource.EUROGAMER: parse_eurogamer,
+    CodeSource.MOBILEMATTERS: parse_mobilematters,
     CodeSource.POCKETTACTICS: parse_pockettactics,
     CodeSource.POLYGON: parse_polygon,
 }

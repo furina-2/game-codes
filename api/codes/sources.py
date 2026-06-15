@@ -17,6 +17,7 @@ class CodeSource(StrEnum):
     EUROGAMER = "eurogamer"
     POCKETTACTICS = "pockettactics"
     POLYGON = "polygon"
+    MOBILEMATTERS = "mobilematters"
 
 
 CODE_URLS: Final[dict[str, dict[CodeSource, str]]] = {
@@ -32,7 +33,7 @@ CODE_URLS: Final[dict[str, dict[CodeSource, str]]] = {
         CodeSource.POLYGON: "https://www.polygon.com/neverness-to-everness-codes-list-redeem-how-to/",
     },
     Game.bluearchive: {
-        CodeSource.EUROGAMER: "https://www.eurogamer.net/blue-archive-codes",
+        CodeSource.MOBILEMATTERS: "https://mobilematters.gg/redeem-codes/blue-archive-codes",
     },
     Game.endfield: {
         CodeSource.GAMESRADAR: "https://www.gamesradar.com/games/rpg/arknights-endfield-codes/",
