@@ -34,7 +34,6 @@ CODE_URLS: Final[dict[str, dict[CodeSource, str]]] = {
     Game.bluearchive: {
         CodeSource.DEXERTO: "https://www.dexerto.com/codes/blue-archive-codes-3311458/",
         CodeSource.EUROGAMER: "https://www.eurogamer.net/blue-archive-codes",
-        CodeSource.POCKETTACTICS: "https://www.pockettactics.com/blue-archive/codes",
     },
     Game.endfield: {
         CodeSource.GAMESRADAR: "https://www.gamesradar.com/games/rpg/arknights-endfield-codes/",
