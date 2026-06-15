@@ -81,6 +81,47 @@ NOISE_PREFIXES: tuple[str, ...] = (
 )
 
 
+REWARD_NOISE_WORDS: set[str] = {
+    "release", "date", "time", "title", "description", "summary",
+    "details", "information", "content", "article", "page", "section",
+    "update", "announcement", "announce", "status", "note", "notes",
+    "version", "patch", "hotfix", "maintenance",
+    "schedule", "scheduled", "coming", "soon", "later",
+    "click", "here", "link", "read", "more",
+    "related", "other", "various", "multiple", "select",
+    "and", "the", "a", "an", "of", "in", "on", "at", "to", "for",
+    "with", "from", "by", "is", "are", "was", "were", "be", "been",
+    "no", "not", "or", "but", "if", "as", "has", "had", "have",
+    "its", "it", "their", "they", "this", "that", "these", "those",
+    "all", "any", "each", "every", "some", "many", "much",
+    "total", "subtotal", "amount", "quantity", "number",
+    "item", "items", "type", "types", "category", "categories",
+    "already", "now", "available", "new", "currently",
+}
+
+
+def _is_reward_noise(reward: str, code: str) -> bool:
+    if not reward:
+        return False
+    text = reward
+    text = text.replace(code, "").strip()
+    text = re.sub(r'\b[A-Z][A-Z0-9_]{3,}\b', '', text).strip()
+    text = text.lower()
+    text = re.sub(r'[\s\-:,;.()\[\]!?\'\"]+', ' ', text).strip()
+    if not text:
+        return True
+    words = text.split()
+    if len(words) <= 5:
+        non_noise = [
+            w for w in words
+            if w not in REWARD_NOISE_WORDS
+            and not re.match(r'^\d+[xX]?$', w)
+        ]
+        if not non_noise:
+            return True
+    return False
+
+
 def _is_noise(code: str) -> bool:
     if code in NOISE_WORDS:
         return True
@@ -204,7 +245,7 @@ def _parse_generic(html: str) -> list[dict]:
             seen.add(c)
             rewards = entry["rewards"] or rewards_map.get(c, "")
             results.append({"code": c, "rewards": rewards})
-    return results
+    return [r for r in results if not _is_reward_noise(r["rewards"], r["code"])]
 
 
 def parse_gamesradar(html: str) -> list[dict]:
