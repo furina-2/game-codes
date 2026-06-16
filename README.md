@@ -12,7 +12,6 @@
 
 [![WuWa](https://img.shields.io/badge/dynamic/json?url=https://game-codes.wisp.uno/stats&query=%24.wuwa.codes&label=WuWa&color=yellow)](https://game-codes.wisp.uno/codes?game=wuwa)
 [![NTE](https://img.shields.io/badge/dynamic/json?url=https://game-codes.wisp.uno/stats&query=%24.nte.codes&label=NTE&color=blue)](https://game-codes.wisp.uno/codes?game=nte)
-[![Blue Archive](https://img.shields.io/badge/dynamic/json?url=https://game-codes.wisp.uno/stats&query=%24.bluearchive.codes&label=Blue%20Archive&color=purple)](https://game-codes.wisp.uno/codes?game=bluearchive)
 [![Endfield](https://img.shields.io/badge/dynamic/json?url=https://game-codes.wisp.uno/stats&query=%24.endfield.codes&label=Endfield&color=red)](https://game-codes.wisp.uno/codes?game=endfield)
 
 Auto-scrapes game redeem codes from news sites. Always up-to-date, refreshed hourly.
@@ -43,7 +42,6 @@ curl https://game-codes.wisp.uno/codes?game=nte
 |---|---|---|---|
 | `wuwa` | Wuthering Waves | Open-world action RPG by Kuro Games | ![1](https://img.shields.io/badge/dynamic/json?url=https://game-codes.wisp.uno/stats&query=%24.wuwa.codes&label=&color=yellow) |
 | `nte` | Neverness to Everness | Urban fantasy open-world RPG | ![6](https://img.shields.io/badge/dynamic/json?url=https://game-codes.wisp.uno/stats&query=%24.nte.codes&label=&color=blue) |
-| `bluearchive` | Blue Archive | Tactical RPG with anime-style students | ![4](https://img.shields.io/badge/dynamic/json?url=https://game-codes.wisp.uno/stats&query=%24.bluearchive.codes&label=&color=purple) |
 | `endfield` | Arknights: Endfield | 3D sci-fi RPG, sequel to Arknights | ![3](https://img.shields.io/badge/dynamic/json?url=https://game-codes.wisp.uno/stats&query=%24.endfield.codes&label=&color=red) |
 
 > Codes expire from source sites over time. The API auto-detects and removes expired codes hourly.
@@ -80,10 +78,6 @@ curl https://game-codes.wisp.uno/games
     "name": "Neverness to Everness",
     "description": "Urban fantasy open-world RPG"
   },
-  "bluearchive": {
-    "name": "Blue Archive",
-    "description": "Tactical RPG with anime-style students"
-  },
   "endfield": {
     "name": "Arknights: Endfield",
     "description": "3D sci-fi RPG, sequel to Arknights"
@@ -96,7 +90,7 @@ curl https://game-codes.wisp.uno/games
 Returns verified and unverified codes for a game.
 
 **Parameters:**
-- `game` (required) — one of: `wuwa`, `nte`, `bluearchive`, `endfield`
+- `game` (required) — one of: `wuwa`, `nte`, `endfield`
 
 **Response fields:**
 - `codes` — confirmed working, safe to redeem
@@ -253,7 +247,6 @@ Exceeding the limit returns `429`:
 |---|---|
 | WuWa | GamesRadar, GameRant, PCGamesN, wuthering.gg |
 | NTE | GamesRadar, Game8, GameWith, Polygon |
-| Blue Archive | Dexerto, Eurogamer, Pocket Tactics |
 | Endfield | GamesRadar, Game8 |
 
 ## Self-Host
@@ -281,7 +274,7 @@ Requires Python 3.11+. No database — everything stored in `seed.json`.
 Scraping runs every hour via the built-in scheduler. Expired codes are automatically removed in the same pass.
 
 **Why are some codes in `unverified`?**  
-Codes start as `unverified` when first scraped. For games with web redemption (Blue Archive), the daily check tries to verify them against the game's API. Games without web redemption are immediately marked OK.
+Codes start as `unverified` when first scraped. The daily check re-verifies them; games without web redemption are immediately marked OK.
 
 **Can I add my own codes?**  
 Yes — `POST /codes` with a Bearer token. See the Auth endpoints section above.

@@ -1,7 +1,7 @@
-const GAMES = ["wuwa", "nte", "bluearchive", "endfield"];
-const GAME_LABELS = { wuwa: "Wuthering Waves", nte: "Neverness to Everness", bluearchive: "Blue Archive", endfield: "Arknights: Endfield" };
-const GAME_LOGOS = { wuwa: "wuwa.svg", nte: "nte.png", bluearchive: "bluearchive.svg", endfield: "endfield.svg" };
-const GAME_COLORS = { wuwa: "#eab308", nte: "#3b82f6", bluearchive: "#a855f7", endfield: "#ef4444" };
+const GAMES = ["wuwa", "nte", "endfield"];
+const GAME_LABELS = { wuwa: "Wuthering Waves", nte: "Neverness to Everness", endfield: "Arknights: Endfield" };
+const GAME_LOGOS = { wuwa: "wuwa.svg", nte: "nte.png", endfield: "endfield.svg" };
+const GAME_COLORS = { wuwa: "#eab308", nte: "#3b82f6", endfield: "#ef4444" };
 
 let currentGame = "wuwa";
 
@@ -11,7 +11,7 @@ async function fetchJSON(url) {
   return res.json();
 }
 
-const GAME_SHORT_LABELS = { wuwa: "WuWa", nte: "NTE", bluearchive: "BA", endfield: "Endfield" };
+const GAME_SHORT_LABELS = { wuwa: "WuWa", nte: "NTE", endfield: "Endfield" };
 
 function updateStats(stats) {
   const row = document.getElementById("statsRow");

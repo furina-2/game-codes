@@ -11,7 +11,6 @@ class Settings(BaseSettings):
     api_token: str = ""
     wuwa_new_code_webhook: str = ""
     nte_new_code_webhook: str = ""
-    bluearchive_new_code_webhook: str = ""
     endfield_new_code_webhook: str = ""
 
 

@@ -24,6 +24,5 @@ def load_uids() -> dict[str, str]:
 REDEEM_URLS: dict[str, str] = {
     Game.wuwa: "",
     Game.nte: "",
-    Game.bluearchive: "https://mcoupon.nexon.com/bluearchive",
     Game.endfield: "",
 }

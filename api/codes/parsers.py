@@ -13,12 +13,8 @@ SELECTORS: dict[CodeSource, str] = {
     CodeSource.GAMESRADAR: ".article-body",
     CodeSource.GAME8: ".archive-style-wrapper",
     CodeSource.GAMEWITH: ".article-wrap",
-    CodeSource.DEXERTO: "article",
-    CodeSource.MOBILEMATTERS: "article",
     CodeSource.PCGAMESN: ".entry-content",
     CodeSource.WUTHERINGGG: ".codes-table",
-    CodeSource.EUROGAMER: ".article_body_content",
-    CodeSource.POCKETTACTICS: ".entry-content",
     CodeSource.POLYGON: ".article-body",
 }
 
@@ -103,60 +99,6 @@ def parse_polygon(html: str) -> list[dict]:
         if code and _is_valid_code(code) and code not in seen:
             seen.add(code)
             results.append({"code": code, "rewards": rewards})
-    return results
-
-
-def parse_eurogamer(html: str) -> list[dict]:
-    soup = BeautifulSoup(html, "lxml")
-    container = _container(soup, SELECTORS[CodeSource.EUROGAMER])
-    results: list[dict] = []
-    seen: set[str] = set()
-    for li in container.find_all("li"):
-        if _heading_has_expired(li):
-            continue
-        text = li.get_text(" ", strip=True)
-        if ":" not in text or len(text) > 200:
-            continue
-        parts = text.split(":", 1)
-        code = parts[0].strip().split("/")[0].strip()
-        if not _is_valid_code(code):
-            continue
-        rewards = parts[1].strip()
-        if code not in seen:
-            seen.add(code)
-            results.append({"code": code, "rewards": rewards})
-    return results
-
-
-def parse_mobilematters(html: str) -> list[dict]:
-    soup = BeautifulSoup(html, "lxml")
-    container = _container(soup, SELECTORS[CodeSource.MOBILEMATTERS])
-    results: list[dict] = []
-    seen: set[str] = set()
-    for li in container.find_all("li"):
-        if _heading_has_expired(li):
-            continue
-        code, rewards = _find_li_content(li)
-        if not (code and _is_valid_code(code) and code not in seen and rewards):
-            continue
-        rewards = re.sub(r"\s*\(new!?\)\s*", "", rewards, flags=re.I).strip()
-        seen.add(code)
-        results.append({"code": code, "rewards": rewards})
-    return results
-
-
-def parse_pockettactics(html: str) -> list[dict]:
-    soup = BeautifulSoup(html, "lxml")
-    container = _container(soup, SELECTORS[CodeSource.POCKETTACTICS])
-    results: list[dict] = []
-    seen: set[str] = set()
-    for li in container.find_all("li"):
-        if _heading_has_expired(li):
-            continue
-        code, rewards = _find_li_content(li)
-        if code and _is_valid_code(code) and code not in seen:
-            seen.add(code)
-            results.append({"code": code, "rewards": rewards or ""})
     return results
 
 
@@ -261,43 +203,12 @@ def parse_wutheringgg(html: str) -> list[dict]:
     return results
 
 
-def parse_dexerto(html: str) -> list[dict]:
-    soup = BeautifulSoup(html, "lxml")
-    container = _container(soup, SELECTORS[CodeSource.DEXERTO])
-    results: list[dict] = []
-    seen: set[str] = set()
-    for strong in container.find_all(["strong", "b"]):
-        if _heading_has_expired(strong):
-            continue
-        text = strong.get_text(strip=True)
-        code = text.split("/")[0].strip()
-        if not _is_valid_code(code):
-            continue
-        parent = strong.parent
-        rewards = ""
-        if parent:
-            parent_text = parent.get_text(" ", strip=True)
-            m = re.search(
-                r"\b" + re.escape(code) + r"\b\s*[-–:]\s*(.*)", parent_text
-            )
-            if m:
-                rewards = m.group(1).strip()
-        if code not in seen:
-            seen.add(code)
-            results.append({"code": code, "rewards": rewards})
-    return results
-
-
 _PARSERS: dict[CodeSource, ParserFunc] = {
     CodeSource.GAMESRADAR: parse_gamesradar,
     CodeSource.GAME8: parse_game8,
     CodeSource.GAMEWITH: parse_gamewith,
-    CodeSource.DEXERTO: parse_dexerto,
     CodeSource.PCGAMESN: parse_pcgamesn,
     CodeSource.WUTHERINGGG: parse_wutheringgg,
-    CodeSource.EUROGAMER: parse_eurogamer,
-    CodeSource.MOBILEMATTERS: parse_mobilematters,
-    CodeSource.POCKETTACTICS: parse_pockettactics,
     CodeSource.POLYGON: parse_polygon,
 }
 

@@ -6,10 +6,6 @@
   {"id": 5, "code": "NTEWINFONS", "game": "nte", "status": "OK", "rewards": "20,000 Fons", "source": "scraper"},
   {"id": 6, "code": "NTEFREE", "game": "nte", "status": "OK", "rewards": "30,000 Fons", "source": "scraper"},
   {"id": 7, "code": "NTEGIFT", "game": "nte", "status": "OK", "rewards": "50 Annulith, 5 Rising Hunter Guides, 5 Light Dyes Livestream 1.1 codes (were meant to expire on May 25 but are still active)", "source": "scraper"},
-  {"id": 8, "code": "DOKIDOKIRAID", "game": "bluearchive", "status": "OK", "rewards": "600 Pyroxene 15 Superior Activity Report 50 Advanced Activity Report 200 Total Assault Coin 200 Grand Assault Coin", "source": "scraper"},
-  {"id": 9, "code": "HEAVYCALIBER310", "game": "bluearchive", "status": "OK", "rewards": "600x Pyroxene", "source": "scraper"},
-  {"id": 10, "code": "BOLTCATCH831", "game": "bluearchive", "status": "OK", "rewards": "30x T9 Equipment Blueprint Choice Box, 30x T8 Equipment Blueprint Choice Box, 30x T7 Equipment Blueprint Choice Box", "source": "scraper"},
-  {"id": 11, "code": "MAGICALVIGILANTE", "game": "bluearchive", "status": "OK", "rewards": "5x Gift Choice Box, 10x Superior Enhancement Stone, 5x Advanced Enhancement Stone", "source": "scraper"},
   {"id": 12, "code": "ZAU2SYXHWX5L4ZH", "game": "endfield", "status": "OK", "rewards": "5,000 T-Creds, 10 Arms INSP Kits", "source": "scraper"},
   {"id": 13, "code": "ENDFIELDGIFT", "game": "endfield", "status": "OK", "rewards": "150 Oroberyl, 10,000 T-Creds, 20 Intermediate Combat Records, 20 Arms INSP Kits [permanent code]", "source": "scraper"},
   {"id": 14, "code": "ENDFIELD4PC", "game": "endfield", "status": "OK", "rewards": "13,000 T-Creds, 2 Advanced Combat Records, 2 Arms INSP Kits [permanent code, can only be redeemed on PC]", "source": "scraper"}

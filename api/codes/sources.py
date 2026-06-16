@@ -10,14 +10,10 @@ class CodeSource(StrEnum):
     GAMESRADAR = "gamesradar"
     GAME8 = "game8"
     GAMEWITH = "gamewith"
-    DEXERTO = "dexerto"
     PCGAMESN = "pcgamesn"
     VG247 = "vg247"
     WUTHERINGGG = "wutheringgg"
-    EUROGAMER = "eurogamer"
-    POCKETTACTICS = "pockettactics"
     POLYGON = "polygon"
-    MOBILEMATTERS = "mobilematters"
 
 
 CODE_URLS: Final[dict[str, dict[CodeSource, str]]] = {
@@ -31,9 +27,6 @@ CODE_URLS: Final[dict[str, dict[CodeSource, str]]] = {
         CodeSource.GAME8: "https://game8.co/games/Neverness-to-Everness/archives/593718",
         CodeSource.GAMEWITH: "https://gamewith.net/nte/74145",
         CodeSource.POLYGON: "https://www.polygon.com/neverness-to-everness-codes-list-redeem-how-to/",
-    },
-    Game.bluearchive: {
-        CodeSource.MOBILEMATTERS: "https://mobilematters.gg/redeem-codes/blue-archive-codes",
     },
     Game.endfield: {
         CodeSource.GAMESRADAR: "https://www.gamesradar.com/games/rpg/arknights-endfield-codes/",

@@ -3,7 +3,6 @@ from __future__ import annotations
 from api.constants import Game
 
 from api.core.base import GameIntegration
-from api.games.bluearchive import BlueArchiveIntegration
 from api.games.endfield import EndfieldIntegration
 from api.games.nte import NTEIntegration
 from api.games.wuwa import WuWaIntegration
@@ -25,5 +24,4 @@ def list_games() -> list[str]:
 
 register(Game.wuwa, WuWaIntegration())
 register(Game.nte, NTEIntegration())
-register(Game.bluearchive, BlueArchiveIntegration())
 register(Game.endfield, EndfieldIntegration())
