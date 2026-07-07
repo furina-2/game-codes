@@ -1,0 +1,15 @@
+name: Scrape Codes
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+jobs:
+  update-codes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger update-codes endpoint
+        run: |
+          curl -s -X POST "${{ secrets.API_URL }}/update-codes" \
+            -H "Authorization: Bearer ${{ secrets.API_TOKEN }}"
