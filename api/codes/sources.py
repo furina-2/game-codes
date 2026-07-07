@@ -13,7 +13,6 @@ class CodeSource(StrEnum):
     PCGAMESN = "pcgamesn"
     VG247 = "vg247"
     WUTHERINGGG = "wutheringgg"
-    POLYGON = "polygon"
 
 
 CODE_URLS: Final[dict[str, dict[CodeSource, str]]] = {
@@ -26,7 +25,6 @@ CODE_URLS: Final[dict[str, dict[CodeSource, str]]] = {
         CodeSource.GAMESRADAR: "https://www.gamesradar.com/games/action-rpg/neverness-to-everness-codes-nte/",
         CodeSource.GAME8: "https://game8.co/games/Neverness-to-Everness/archives/593718",
         CodeSource.GAMEWITH: "https://gamewith.net/nte/74145",
-        CodeSource.POLYGON: "https://www.polygon.com/neverness-to-everness-codes-list-redeem-how-to/",
     },
     Game.endfield: {
         CodeSource.GAMESRADAR: "https://www.gamesradar.com/games/rpg/arknights-endfield-codes/",

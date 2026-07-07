@@ -15,7 +15,6 @@ SELECTORS: dict[CodeSource, str] = {
     CodeSource.GAMEWITH: ".article-wrap",
     CodeSource.PCGAMESN: ".entry-content",
     CodeSource.WUTHERINGGG: ".codes-table",
-    CodeSource.POLYGON: ".article-body",
 }
 
 _VALID_CODE = re.compile(r"^[A-Z0-9_]{4,}$")
@@ -82,21 +81,6 @@ def parse_gamesradar(html: str) -> list[dict]:
                 if "livestream" in after.lower() or "live stream" in after.lower():
                     passed_livestream = True
                     continue
-            seen.add(code)
-            results.append({"code": code, "rewards": rewards})
-    return results
-
-
-def parse_polygon(html: str) -> list[dict]:
-    soup = BeautifulSoup(html, "lxml")
-    container = _container(soup, SELECTORS[CodeSource.POLYGON])
-    results: list[dict] = []
-    seen: set[str] = set()
-    for li in container.find_all("li"):
-        if _heading_has_expired(li):
-            continue
-        code, rewards = _find_li_content(li)
-        if code and _is_valid_code(code) and code not in seen:
             seen.add(code)
             results.append({"code": code, "rewards": rewards})
     return results
@@ -209,7 +193,6 @@ _PARSERS: dict[CodeSource, ParserFunc] = {
     CodeSource.GAMEWITH: parse_gamewith,
     CodeSource.PCGAMESN: parse_pcgamesn,
     CodeSource.WUTHERINGGG: parse_wutheringgg,
-    CodeSource.POLYGON: parse_polygon,
 }
 
 
