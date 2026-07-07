@@ -52,16 +52,27 @@ async def update_codes() -> None:
                         f"OK -> UNVERIFIED (not in known list)"
                     )
                 elif existing.status in (CodeStatus.NOT_OK, CodeStatus.UNVERIFIED):
-                    new_status = await integration.check_code(entry["code"])
-                    if new_status != existing.status:
-                        await db.redeemcode.update(
-                            where={"id": existing.id},
-                            data={"status": new_status},
-                        )
-                        logger.info(
-                            f"Reactivated {entry['code']} for {game}: "
-                            f"{existing.status} -> {new_status}"
-                        )
+                    if known is not None and entry["code"].upper() not in known:
+                        if existing.status != CodeStatus.UNVERIFIED:
+                            await db.redeemcode.update(
+                                where={"id": existing.id},
+                                data={"status": CodeStatus.UNVERIFIED},
+                            )
+                            logger.info(
+                                f"Marked {entry['code']} for {game}: "
+                                f"{existing.status} -> UNVERIFIED (not in known list)"
+                            )
+                    else:
+                        new_status = await integration.check_code(entry["code"])
+                        if new_status != existing.status:
+                            await db.redeemcode.update(
+                                where={"id": existing.id},
+                                data={"status": new_status},
+                            )
+                            logger.info(
+                                f"Reactivated {entry['code']} for {game}: "
+                                f"{existing.status} -> {new_status}"
+                            )
                 if entry.get("rewards") and entry["rewards"] != existing.rewards:
                     await db.redeemcode.update(
                         where={"id": existing.id},
