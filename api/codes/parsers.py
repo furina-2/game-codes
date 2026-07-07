@@ -15,6 +15,7 @@ SELECTORS: dict[CodeSource, str] = {
     CodeSource.GAMEWITH: ".article-wrap",
     CodeSource.PCGAMESN: ".entry-content",
     CodeSource.WUTHERINGGG: ".codes-table",
+    CodeSource.NTEGAME: "main",
 }
 
 _VALID_CODE = re.compile(r"^[A-Z0-9_]{4,}$")
@@ -167,6 +168,44 @@ def parse_pcgamesn(html: str) -> list[dict]:
     return results
 
 
+def parse_ntegame(html: str) -> list[dict]:
+    soup = BeautifulSoup(html, "lxml")
+    container = _container(soup, SELECTORS[CodeSource.NTEGAME])
+    results: list[dict] = []
+    seen: set[str] = set()
+    for h3 in container.find_all("h3"):
+        code = _sanitize_code(h3.get_text(strip=True))
+        if not code or not _is_valid_code(code):
+            continue
+        parent = h3.parent
+        if parent and "expired" in parent.get_text(" ", strip=True).lower():
+            continue
+        section = parent or h3
+        section_text = section.get_text(" ", strip=True)
+        after_idx = section_text.upper().find(code)
+        if after_idx >= 0:
+            after = section_text[after_idx + len(code):]
+            if "expired" in after.lower():
+                continue
+        rewards_text = section_text
+        for tag in section.find_all(["h1", "h2", "h3", "h4"]):
+            t = tag.get_text(strip=True)
+            if t and t != h3.get_text(strip=True):
+                rewards_text = rewards_text.replace(t, "", 1)
+        idx = rewards_text.upper().find(code)
+        if idx >= 0:
+            rewards = rewards_text[idx + len(code):]
+            rewards = re.sub(r"^[\s:–\-|,;.]+", "", rewards).strip()
+            rewards = re.sub(r"\s+Expir(e[sd]?)?.*$", "", rewards, flags=re.IGNORECASE).strip()
+            rewards = re.sub(r"\s+\d+d\s+\d+h\s+\d+m\s+remaining.*$", "", rewards, flags=re.IGNORECASE).strip()
+        else:
+            rewards = ""
+        if code not in seen:
+            seen.add(code)
+            results.append({"code": code, "rewards": rewards or "no info"})
+    return results
+
+
 def parse_wutheringgg(html: str) -> list[dict]:
     soup = BeautifulSoup(html, "lxml")
     table = soup.select_one(SELECTORS[CodeSource.WUTHERINGGG])
@@ -193,6 +232,7 @@ _PARSERS: dict[CodeSource, ParserFunc] = {
     CodeSource.GAMEWITH: parse_gamewith,
     CodeSource.PCGAMESN: parse_pcgamesn,
     CodeSource.WUTHERINGGG: parse_wutheringgg,
+    CodeSource.NTEGAME: parse_ntegame,
 }
 
 

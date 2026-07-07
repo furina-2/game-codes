@@ -13,6 +13,7 @@ class CodeSource(StrEnum):
     PCGAMESN = "pcgamesn"
     VG247 = "vg247"
     WUTHERINGGG = "wutheringgg"
+    NTEGAME = "ntegame"
 
 
 CODE_URLS: Final[dict[str, dict[CodeSource, str]]] = {
@@ -21,7 +22,9 @@ CODE_URLS: Final[dict[str, dict[CodeSource, str]]] = {
         CodeSource.WUTHERINGGG: "https://wuthering.gg/codes",
         CodeSource.PCGAMESN: "https://www.pcgamesn.com/wuthering-waves/codes",
     },
-    Game.nte: {},
+    Game.nte: {
+        CodeSource.NTEGAME: "https://www.ntegame.com/codes/",
+    },
     Game.endfield: {
         CodeSource.GAMESRADAR: "https://www.gamesradar.com/games/rpg/arknights-endfield-codes/",
         CodeSource.GAME8: "https://game8.co/games/Arknights-Endfield/archives/571509",
