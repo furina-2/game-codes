@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI, HTTPException, Security
@@ -11,7 +12,8 @@ from api.config import settings
 from api.constants import CodeStatus, Game, GAME_DESCRIPTIONS, GAME_NAMES
 from api.codes.task import check_codes, update_codes
 from api.db import db
-from api.models import CreateCode
+from api.discord_bot import CodeBot
+from api.models import CreateCode, UpdateCode
 from api.ratelimit import RateLimitMiddleware
 
 security = HTTPBearer(auto_error=False)
@@ -25,10 +27,20 @@ def verify_token(credentials: HTTPAuthorizationCredentials | None = Security(sec
     return True
 
 
+bot = CodeBot()
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await db.connect()
+    discord_task = None
+    if settings.discord_token:
+        discord_task = asyncio.create_task(bot.start(settings.discord_token))
+        await bot.wait_until_ready()
     yield
+    if discord_task:
+        discord_task.cancel()
+        await bot.close()
 
 
 app = FastAPI(title="Game Codes API", lifespan=lifespan)
@@ -116,6 +128,18 @@ async def add_code(data: CreateCode, _=Depends(verify_token)):
         "source": "manual",
     })
     return {"id": created.id, "code": created.code}
+
+
+@app.patch("/codes/{code_id}")
+async def update_code_status(code_id: int, data: UpdateCode, _=Depends(verify_token)):
+    existing = await db.redeemcode.find_unique(where={"id": code_id})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Code not found")
+    await db.redeemcode.update(
+        where={"id": code_id},
+        data={"status": data.status},
+    )
+    return {"ok": True, "code": existing.code, "status": data.status}
 
 
 @app.delete("/codes/{code_id}")

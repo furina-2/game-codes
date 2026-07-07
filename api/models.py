@@ -23,3 +23,15 @@ class CreateCode(BaseModel):
         if v not in Game.values():
             raise ValueError(f"Invalid game: {v}. Must be one of {Game.values()}")
         return v
+
+
+class UpdateCode(BaseModel):
+    status: str
+
+    @field_validator("status")
+    @classmethod
+    def __valid_status(cls, v: str) -> str:
+        v = v.upper()
+        if v not in ("OK", "NOT_OK", "UNVERIFIED"):
+            raise ValueError("Status must be OK, NOT_OK, or UNVERIFIED")
+        return v
