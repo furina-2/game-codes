@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import json
 import os
+from pathlib import Path
 
 import httpx
 from loguru import logger
@@ -11,6 +13,19 @@ from api.constants import CodeStatus
 from api.core.registry import get_integration, list_games
 from api.core.scraper import scrape_game_codes
 from api.db import db
+
+_known_codes: dict[str, list[str]] | None = None
+
+
+def _load_known_codes() -> dict[str, list[str]]:
+    global _known_codes
+    if _known_codes is None:
+        path = Path(__file__).parent / "known_codes.json"
+        if path.exists():
+            _known_codes = json.loads(path.read_text(encoding="utf-8"))
+        else:
+            _known_codes = {}
+    return _known_codes
 
 
 async def update_codes() -> None:
@@ -26,7 +41,17 @@ async def update_codes() -> None:
                 where={"code": entry["code"], "game": game}
             )
             if existing:
-                if existing.status in (CodeStatus.NOT_OK, CodeStatus.UNVERIFIED):
+                known = _load_known_codes().get(game)
+                if known is not None and existing.status == CodeStatus.OK and entry["code"].upper() not in known:
+                    await db.redeemcode.update(
+                        where={"id": existing.id},
+                        data={"status": CodeStatus.UNVERIFIED},
+                    )
+                    logger.info(
+                        f"Demoted {entry['code']} for {game}: "
+                        f"OK -> UNVERIFIED (not in known list)"
+                    )
+                elif existing.status in (CodeStatus.NOT_OK, CodeStatus.UNVERIFIED):
                     new_status = await integration.check_code(entry["code"])
                     if new_status != existing.status:
                         await db.redeemcode.update(
@@ -48,6 +73,9 @@ async def update_codes() -> None:
                     )
                 continue
             status = await integration.check_code(entry["code"])
+            known = _load_known_codes().get(game)
+            if known is not None and entry["code"].upper() not in known:
+                status = CodeStatus.UNVERIFIED
             await db.redeemcode.create(data={
                 "code": entry["code"],
                 "game": game,
