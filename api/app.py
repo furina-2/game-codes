@@ -1,15 +1,11 @@
 from __future__ import annotations
 
-import asyncio
-import os
 from contextlib import asynccontextmanager
 
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import Depends, FastAPI, HTTPException, Security
 from fastapi.responses import FileResponse
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from fastapi.staticfiles import StaticFiles
-from loguru import logger
 
 from api.config import settings
 from api.constants import CodeStatus, Game, GAME_DESCRIPTIONS, GAME_NAMES
@@ -19,7 +15,6 @@ from api.models import CreateCode
 from api.ratelimit import RateLimitMiddleware
 
 security = HTTPBearer(auto_error=False)
-scheduler = AsyncIOScheduler()
 
 
 def verify_token(credentials: HTTPAuthorizationCredentials | None = Security(security)):
@@ -33,23 +28,7 @@ def verify_token(credentials: HTTPAuthorizationCredentials | None = Security(sec
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await db.connect()
-    if not os.getenv("VERCEL"):
-        scheduler.add_job(update_codes, "interval", hours=1, id="update")
-        scheduler.add_job(
-            check_codes, "cron", hour=1, minute=30, timezone="Asia/Taipei", id="check"
-        )
-        scheduler.start()
-        asyncio.create_task(_initial_update())
-    logger.info("Started scheduler")
     yield
-    scheduler.shutdown()
-
-
-async def _initial_update():
-    await asyncio.sleep(5)
-    logger.info("Running initial code update on startup...")
-    await update_codes()
-    logger.info("Initial code update complete")
 
 
 app = FastAPI(title="Game Codes API", lifespan=lifespan)
