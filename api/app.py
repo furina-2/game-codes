@@ -11,7 +11,7 @@ from api.config import settings
 from api.constants import CodeStatus, Game, GAME_DESCRIPTIONS, GAME_NAMES
 from api.codes.task import check_codes, update_codes
 from api.db import db
-from api.models import CreateCode, UpdateCode
+from api.models import CreateCode, UpdateCode, VerifyCodes
 from api.ratelimit import RateLimitMiddleware
 
 security = HTTPBearer(auto_error=False)
@@ -134,6 +134,22 @@ async def update_code_status(code_id: int, data: UpdateCode, _=Depends(verify_to
 async def delete_code(code_id: int, _=Depends(verify_token)):
     await db.redeemcode.delete(where={"id": code_id})
     return {"ok": True}
+
+
+@app.post("/codes/verify")
+async def verify_codes(data: VerifyCodes, _=Depends(verify_token)):
+    valid = [c.upper() for c in data.codes]
+    ok = 0
+    expired = 0
+    for entry in await db.redeemcode.find_many(where={"game": data.game}):
+        if entry.code in valid:
+            if entry.status != CodeStatus.OK:
+                await db.redeemcode.update(where={"id": entry.id}, data={"status": CodeStatus.OK})
+                ok += 1
+        elif entry.status != CodeStatus.NOT_OK:
+            await db.redeemcode.update(where={"id": entry.id}, data={"status": CodeStatus.NOT_OK})
+            expired += 1
+    return {"ok": ok, "expired": expired}
 
 
 @app.post("/update-codes")
