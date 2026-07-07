@@ -35,7 +35,8 @@ async def lifespan(app: FastAPI):
     await db.connect()
     discord_task = None
     if settings.discord_token:
-        discord_task = asyncio.create_task(bot.start(settings.discord_token))
+        await bot.login(settings.discord_token)
+        discord_task = asyncio.create_task(bot.connect())
         await bot.wait_until_ready()
     yield
     if discord_task:
