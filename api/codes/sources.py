@@ -16,18 +16,7 @@ class CodeSource(StrEnum):
 
 
 CODE_URLS: Final[dict[str, dict[CodeSource, str]]] = {
-    Game.wuwa: {
-        CodeSource.GAMESRADAR: "https://www.gamesradar.com/games/rpg/wuthering-waves-codes-redeem/",
-        CodeSource.WUTHERINGGG: "https://wuthering.gg/codes",
-        CodeSource.PCGAMESN: "https://www.pcgamesn.com/wuthering-waves/codes",
-    },
-    Game.nte: {
-        CodeSource.GAMESRADAR: "https://www.gamesradar.com/games/action-rpg/neverness-to-everness-codes-nte/",
-        CodeSource.GAME8: "https://game8.co/games/Neverness-to-Everness/archives/593718",
-        CodeSource.GAMEWITH: "https://gamewith.net/nte/74145",
-    },
-    Game.endfield: {
-        CodeSource.GAMESRADAR: "https://www.gamesradar.com/games/rpg/arknights-endfield-codes/",
-        CodeSource.GAME8: "https://game8.co/games/Arknights-Endfield/archives/571509",
-    },
+    Game.wuwa: {},
+    Game.nte: {},
+    Game.endfield: {},
 }
